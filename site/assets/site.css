@@ -33,7 +33,7 @@ p{margin:0 0 .8em}
 .top{position:sticky;top:0;z-index:50;background:var(--head);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line2)}
 .top-in{display:flex;align-items:center;gap:18px;height:68px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
-.brand img,.brand-logo{display:block;width:56px;height:56px;object-fit:contain;border-radius:10px;background:#0B1018;box-shadow:0 0 0 1px var(--line)}
+.brand img,.brand-logo{display:block;height:42px;width:auto;max-width:min(132px,36vw);object-fit:contain;border-radius:6px;background:transparent;box-shadow:none}
 .brand-t{display:flex;flex-direction:column;line-height:1.05;font-family:"Lato",sans-serif}
 .brand-t b{font-weight:900;font-size:17px;letter-spacing:.06em;color:var(--tx)}
 .brand-t small{font-size:10px;letter-spacing:.32em;color:var(--acc);font-weight:700;margin-top:3px}
@@ -285,7 +285,7 @@ bdi{unicode-bidi:isolate}
 .rail[data-count="5"]{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:860px){.about,.team,.deals-in,.consult{grid-template-columns:minmax(0,1fr)}.cats.c3{grid-template-columns:1fr 1fr}.reasons{grid-template-columns:1fr}.pillars{grid-template-columns:1fr}
 .foot-in{grid-template-columns:1fr}.foot-s{justify-content:flex-start;max-width:none}}
-@media (max-width:700px){.hero-media{width:min(320px,calc(100vw - 48px))}.sec{padding:60px 0}.wrap{padding-inline:16px}.top-in{height:62px;gap:10px}.nav{top:62px}.brand-t b{font-size:15px}.brand img,.brand-logo{width:48px;height:48px}
+@media (max-width:700px){.hero-media{width:min(320px,calc(100vw - 48px))}.sec{padding:60px 0}.wrap{padding-inline:16px}.top-in{height:62px;gap:10px}.nav{top:62px}.brand-t b{font-size:15px}.brand img,.brand-logo{height:32px;width:auto;max-width:min(108px,34vw)}
 .rail,.rail[data-count]{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-16px;padding:0 16px 10px;max-width:none;scrollbar-width:thin}
 .rail .bn{flex:0 0 72%;scroll-snap-align:center}
 .cats.c3,.cats.c2,.srvs,.contacts,.qs{grid-template-columns:1fr}.journey ol{grid-template-columns:1fr 1fr}

@@ -53,7 +53,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261118k'
+CSS_V = '20261118l'
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
@@ -352,7 +352,7 @@ def build(lang):
 {SPRITE}
 <a class="skip" href="#main">{s("ui.skip")}</a>
 <header class="top" id="top-bar"><div class="wrap top-in">
-<a class="brand" href="{base}#top" aria-label="{e(SHOP_LEGAL_NAME)}"><img class="brand-logo" src="/logo/logo-header.png" width="56" height="56" alt=""><span class="brand-t" dir="ltr"><b>{e(SHOP_BRAND)}</b></span></a>
+<a class="brand" href="{base}#top" aria-label="{e(SHOP_LEGAL_NAME)}"><picture><source type="image/webp" srcset="/logo/logo-header.webp"><img class="brand-logo" src="/logo/logo-header.png" width="288" height="96" alt="MAGNIT"></picture></a>
 <nav class="nav" id="nav" aria-label="{s("ui.menu")}">{nav}</nav>
 <div class="tools">
 <div class="lang"><button type="button" class="tbtn lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="{s("ui.lang")}">{ic("globe")}<span>{short}</span></button><ul class="lang-menu" id="lang-menu" hidden>{langs_menu}</ul></div>
