@@ -243,9 +243,9 @@ t('off.note', 'Product availability, promotional terms and prices are subject to
 t('promo.more', 'Read the offer', 'Прочитать акцию', 'اقرأ العرض')
 t('promo.1.vid', 'iPhone 18 and iPhone Duo', 'iPhone 18 и iPhone Duo', 'iPhone 18 و iPhone Duo')
 t('promo.1.t',
-  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
-  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
-  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae')
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae')
 t('promo.2.vid', 'Accessories at wholesale price', 'Аксессуары в розницу по оптовой цене', 'إكسسوارات بالتجزئة بسعر الجملة')
 t('promo.2.t',
   'Electronics\nAccessories\nSmart devices\nAccessories at wholesale price in retail\nCurrent prices and special offers are available from our managers\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
