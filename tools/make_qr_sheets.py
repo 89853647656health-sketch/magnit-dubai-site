@@ -1,4 +1,4 @@
-"""Печатные QR-листы MAGNIT: логотип, название MAGNIT, код. Без подписей и адреса."""
+"""Печатные QR-листы MAGNIT: логотип и под ним код. Без подписей и адреса."""
 import os
 import qrcode, numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
@@ -58,14 +58,8 @@ def compose(url):
     logo = logo.resize((logo_size, logo_size), Image.LANCZOS)
     qr = qr_image(url).resize((780, 780), Image.NEAREST)
     logo_y = 120
-    name_y = logo_y + logo_size + 28
-    qr_y = name_y + 100
+    qr_y = logo_y + logo_size + 60
     canvas.paste(logo, ((W - logo_size) // 2, logo_y))
-    draw = ImageDraw.Draw(canvas)
-    f = font(72)
-    bbox = draw.textbbox((0, 0), NAME, font=f)
-    tw = bbox[2] - bbox[0]
-    draw.text(((W - tw) // 2, name_y), NAME, fill=QR_COLOR, font=f)
     canvas.paste(qr, ((W - 780) // 2, qr_y))
     return canvas
 
@@ -81,7 +75,7 @@ def main():
         check = cv2.imread(png)
         got, _, _ = cv2.QRCodeDetector().detectAndDecode(check)
         assert got == url, (name, got, url)
-        print('wrote', name, url, 'qr_bottom', 120 + 620 + 28 + 100 + 780, 'page', H)
+        print('wrote', name, url, 'qr_bottom', 120 + 620 + 60 + 780, 'page', H)
 
 
 if __name__ == '__main__':
