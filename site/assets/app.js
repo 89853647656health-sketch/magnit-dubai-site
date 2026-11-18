@@ -122,3 +122,30 @@
     });
   }
 })();
+
+(function () {
+  var panel = document.getElementById('about');
+  if (!panel) return;
+  function openAbout(ev) {
+    if (ev) ev.preventDefault();
+    if (typeof panel.showModal === 'function') panel.showModal();
+    else panel.setAttribute('open', '');
+    var nav = document.getElementById('nav'), mb = document.getElementById('menu-btn');
+    if (nav) nav.classList.remove('open');
+    if (mb) mb.setAttribute('aria-expanded', 'false');
+  }
+  function closeAbout() {
+    if (typeof panel.close === 'function' && panel.open) panel.close();
+    else panel.removeAttribute('open');
+    if (location.hash === '#about') history.replaceState(null, '', location.pathname + location.search);
+  }
+  document.querySelectorAll('[data-about-open]').forEach(function (a) {
+    a.addEventListener('click', openAbout);
+  });
+  document.querySelectorAll('[data-about-close]').forEach(function (a) {
+    a.addEventListener('click', closeAbout);
+  });
+  panel.addEventListener('click', function (e) { if (e.target === panel) closeAbout(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAbout(); });
+  if (location.hash === '#about') openAbout();
+})();

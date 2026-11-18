@@ -53,7 +53,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261118h'
+CSS_V = '20261118j'
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
@@ -61,14 +61,16 @@ LANGS = [('en', 'English', 'EN', 'ltr'), ('ru', 'Русский', 'RU', 'ltr'), 
 # Чтобы добавить третий язык: дописать кортеж сюда, ключи в tools/texts.py и при необходимости RTL.
 # Категории по концепции и по присланным витринам (8 уникальных; дубль Tablets & iPad не ставить).
 # Баннеры подключаются, если файлы есть в site/img/b/{n}-560.jpg (9:16, без обрезки).
-GROUPS = [('phones', ['phones', 'apple', 'android'], ['01', '02']),
-          ('computers', ['computers'], ['03']),
-          ('acc', ['accessories'], ['04', '05']),
-          ('ent', ['gaming'], ['06', '07']),
+# 8 витрин Арсена: 01 vitrina-1, 02 vitrina-2, 03 vitrina-9 (планшеты), 04-08 vitrina-4..8. vitrina-3 не используем.
+GROUPS = [('phones', ['phones'], ['01', '07']),
+          ('computers', ['computers'], ['02', '03', '04']),
+          ('acc', ['accessories'], ['05']),
+          ('ent', ['gaming'], ['06']),
           ('life', ['lifestyle'], ['08'])]
+SHOWCASES = ['01', '02', '03', '04', '05', '06', '07', '08']
 ABOUT_B = []
 HIDDEN_B = set()
-ORDER = [b for g in GROUPS for b in g[2]]
+ORDER = list(SHOWCASES)
 PROMOS = [('1', 848, 480, True), ('2', 736, 400, False), ('3', 736, 400, False), ('4', 736, 400, False)]
 def banner_exists(n):
     return os.path.isfile(os.path.join(SITE, 'img', 'b', f'{n}-560.jpg')) or os.path.isfile(os.path.join(SITE, 'img', 'b', f'{n}-560.webp'))
@@ -165,7 +167,10 @@ def build(lang):
         for line in L[k].split('\n'):
             if line.startswith('• '): lst.append(f'<li>{e(line[2:])}</li>'); continue
             if lst: out.append('<ul class="dots">' + ''.join(lst) + '</ul>'); lst = []
-            out.append(f'<p{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>{e(line)}</p>')
+            if line.startswith('~~'):
+                out.append(f'<p{(" class=" + chr(34) + cls + chr(34)) if cls else ""}><s>{e(line[2:])}</s></p>')
+            else:
+                out.append(f'<p{(" class=" + chr(34) + cls + chr(34)) if cls else ""}>{e(line)}</p>')
         if lst: out.append('<ul class="dots">' + ''.join(lst) + '</ul>')
         return ''.join(out)
     def num(n): return (f'{n:02d}'.translate(FADIG) if lang == 'fa' else f'{n:02d}')
@@ -176,9 +181,9 @@ def build(lang):
             return ''
         alt = s('b.' + n) if ('b.' + n) in L else e(n)
         return (f'<figure class="bn"><button type="button" class="bn-open" data-b="{n}" aria-label="{s("ui.zoom")}: {alt}">'
-                f'<picture><source type="image/webp" srcset="/img/b/{n}-560.webp 560w, /img/b/{n}-1122.webp 1122w" sizes="(max-width: 700px) 78vw, 300px">'
-                f'<img src="/img/b/{n}-560.jpg" width="560" height="700" alt="{alt}" loading="{"eager" if eager else "lazy"}" decoding="async"></picture>'
-                f'<span class="bn-zoom">{ic("zoom")}</span></button><figcaption>{alt}</figcaption></figure>')
+                f'<picture><source type="image/webp" srcset="/img/b/{n}-560.webp 560w, /img/b/{n}-1008.webp 1008w" sizes="(max-width: 700px) 92vw, 280px">'
+                f'<img src="/img/b/{n}-560.jpg" width="560" height="996" alt="{alt}" loading="{"eager" if eager else "lazy"}" decoding="async"></picture>'
+                f'<span class="bn-zoom">{ic("zoom")}</span></button></figure>')
     def more(k):
         return f'<details class="more"><summary><span>{s("ui.more")}</span>{ic("chev")}</summary><div class="more-body">{paras(k)}</div></details>'
     def btn(href, icon, label, cls='btn'):
@@ -187,14 +192,25 @@ def build(lang):
         return f'<a class="{cls}" href="{e(href)}"{ext(href)}>{ic(icon)}<span>{label}</span></a>'
     langs_menu = ''.join(f'<li><a href="{"/" if c == "en" else "/" + c + "/"}" hreflang="{c}" lang="{c}" data-lang="{c}"{" aria-current=" + chr(34) + "true" + chr(34) if c == lang else ""}><b>{sh}</b><span>{nm}</span></a></li>' for c, nm, sh, _ in LANGS)
     alt_links = ''.join(f'<link rel="alternate" hreflang="{c}" href="{URL}{"" if c == "en" else c + "/"}">' for c, *_ in LANGS) + f'<link rel="alternate" hreflang="x-default" href="{URL}">'
-    nav = ''.join(f'<a href="#{a}">{s("nav." + k)}</a>' for a, k in [('about', 'about'), ('products', 'products'), ('services', 'services'), ('why', 'why'), ('deals', 'deals'), ('contacts', 'contacts')])
-    groups = ''
-    for g, cats, bns in GROUPS:
-        bns = [b for b in bns if b not in HIDDEN_B and banner_exists(b)]
-        cards = ''.join(f'<article class="cat"><span class="cat-ic">{ic(CAT_IC[c])}</span><h4>{s(f"c.{c}.h")}</h4><p class="cat-s">{s(f"c.{c}.s")}</p><p class="cat-b">{s(f"c.{c}.b")}</p>{more(f"c.{c}.m")}</article>' for c in cats)
-        groups += (f'<div class="group" id="g-{g}"><div class="group-head"><h3>{s("g." + g)}</h3>'
-                   f'<a class="btn ghost sm" href="{e(wa(L["wa.ask"] + L["g." + g]))}" target="_blank" rel="noopener">{ic("wa")}<span>{s("prod.ask")}</span></a></div>'
-                   f'<div class="cats c{len(cats)}">{cards}</div><div class="rail" data-count="{len(bns)}">{"".join(banner(b) for b in bns)}</div></div>')
+    nav = ''.join(
+        (f'<a href="#about" data-about-open="1">{s("nav.about")}</a>' if k == 'about' else f'<a href="#{a}">{s("nav." + k)}</a>')
+        for a, k in [('deals', 'deals'), ('products', 'products'), ('services', 'services'), ('why', 'why'), ('contacts', 'contacts'), ('about', 'about')]
+    )
+    groups = '<div class="show-grid">'
+    for i, n in enumerate(SHOWCASES):
+        if n in HIDDEN_B or not banner_exists(n):
+            continue
+        title = s('b.' + n)
+        cap = s('b.' + n + '.c')
+        groups += (
+            f'<article class="show-card" id="g-{n}">'
+            f'{banner(n, eager=(i < 2))}'
+            f'<h3>{title}</h3>'
+            f'<p>{cap}</p>'
+            f'<a class="btn ghost sm" href="{e(wa(L["wa.ask"] + L["b." + n]))}" target="_blank" rel="noopener">{ic("wa")}<span>{s("prod.ask")}</span></a>'
+            f'</article>'
+        )
+    groups += '</div>' 
     services = ''.join(f'<article class="srv"><span class="srv-ic">{ic(icn)}</span><h3>{s(f"s.{k}.h")}</h3><p>{s(f"s.{k}.s")}</p>{more(f"s.{k}.m")}</article>' for k, icn in SERV)
     journey = ''.join(f'<li><b>{num(i)}</b><h4>{s(f"j.{i}.h")}</h4><p>{s(f"j.{i}.t")}</p></li>' for i in range(1, 6))
     n_why = max(i for i in range(1, 16) if f'r.{i}.h' in L)
@@ -223,12 +239,17 @@ def build(lang):
     act_items = [btn('#products', 'phone-d', s('a.range'), 'pill'), btn('#callback', 'tag', s('a.prices'), 'pill'), btn('#contacts', 'pin', s('a.contact'), 'pill')]
     if has(TG_DM): act_items.append(btn(TG_DM, 'tg', s('a.tg'), 'pill'))
     acts = ''.join(act_items)
-    hero_cta = btn('#callback', 'tag', s('cta.price'), 'btn primary') + btn(wa_link(PHONE, L.get('wa.hello','')), 'wa', s('cta.wa'), 'btn') + btn(MAP_DIR, 'route', s('cta.route'), 'btn') + (btn(TG_DM, 'tg', s('cta.tg'), 'btn') if has(TG_DM) else '') + btn('tel:' + PHONE, 'phone', s('cta.call'), 'btn ghost')
+    hero_cta = ''
+    for num, txt in PHONES:
+        tel_l = f'<bdi dir="ltr">{e(txt)}</bdi>'
+        wa_l = 'WhatsApp ' + f'<bdi dir="ltr">{e(txt)}</bdi>'
+        hero_cta += btn('tel:' + num, 'phone', tel_l, 'btn')
+        hero_cta += btn(wa_link(num, L.get('wa.hello','')), 'wa', wa_l, 'btn primary')
 
     def crow(href, icon, label, handle):
         return f'<li><a class="crow" href="{e(href)}"{ext(href)}><span class="crow-ic">{ic(icon)}</span><span class="crow-t"><b>{label}</b><bdi dir="ltr">{e(handle)}</bdi></span>{ic("arrow", "crow-go")}</a></li>'
     lb_order = ' '.join(b for b in ORDER if b not in HIDDEN_B)
-    ld_obj = {'@context': 'https://schema.org', '@type': 'Store', 'name': SHOP_LEGAL_NAME, 'url': URL, 'logo': URL + 'logo/logo-round-512.png', 'image': URL + 'og.jpg',
+    ld_obj = {'@context': 'https://schema.org', '@type': 'Store', 'name': SHOP_LEGAL_NAME, 'url': URL, 'logo': URL + 'logo/logo-full.jpg', 'image': URL + 'og.jpg',
         'telephone': [n for n,_ in PHONES], 'address': {'@type': 'PostalAddress', 'streetAddress': STREET_ADDRESS, 'addressLocality': ADDRESS_LOCALITY, 'addressCountry': 'AE'},
         'hasMap': MAP, 'sameAs': list(dict.fromkeys(u for u in (IG, FB, TT, TG_CH, TG_DM) if has(u)))}
     if has(EMAIL): ld_obj['email'] = EMAIL
@@ -251,6 +272,19 @@ def build(lang):
     foot_items.append((MAP, "pin", s("ct.map")))
     foot_s = '<div class="foot-s">' + ''.join(
         f'<a href="{e(h)}"{ext(h)} aria-label="{n}">{ic(i)}</a>' for h, i, n in foot_items) + '</div>'
+    quick_s = ''.join(
+        f'<a href="{e(h)}"{ext(h)} aria-label="{n}">{ic(i)}</a>' for h, i, n in foot_items)
+    live_logo = ''
+    for live_name in ('logo-live.mp4', 'logo-live.webm'):
+        if os.path.isfile(os.path.join(SITE, 'logo', live_name)):
+            mime = 'video/webm' if live_name.endswith('.webm') else 'video/mp4'
+            live_logo = (
+                f'<video class="hero-live-logo" autoplay muted loop playsinline preload="auto" '
+                f'width="368" height="368" poster="/logo/logo-live-poster.webp" '
+                f'aria-label="{e(SHOP_BRAND)}"><source src="/logo/{live_name}" type="{mime}"></video>'
+            )
+            break
+    hero_mark = live_logo or f'<img class="hero-logo" src="/logo/logo-full.jpg" width="368" height="368" alt="{e(SHOP_BRAND)}">'
     fab_html = f'<a class="fab" href="{e(WA)}" target="_blank" rel="noopener" aria-label="WhatsApp">{ic("wa")}</a>' if has(WA) else ''
     phone_rows = ''.join(f'<p class="big"><a href="tel:{num}"><bdi dir="ltr">{txt}</bdi></a></p>' for num, txt in PHONES)
     call_btns = ''.join(
@@ -318,31 +352,26 @@ def build(lang):
 {SPRITE}
 <a class="skip" href="#main">{s("ui.skip")}</a>
 <header class="top" id="top-bar"><div class="wrap top-in">
-<a class="brand" href="{base}#top" aria-label="{e(SHOP_LEGAL_NAME)}"><img src="/logo/logo-round-96.png" width="44" height="44" alt=""><span class="brand-t" dir="ltr"><b>{e(SHOP_BRAND)}</b><small>{e(SHOP_LEGAL_SUFFIX)}</small></span></a>
+<a class="brand" href="{base}#top" aria-label="{e(SHOP_LEGAL_NAME)}"><img class="brand-logo" src="/logo/logo-header.png" width="56" height="56" alt=""><span class="brand-t" dir="ltr"><b>{e(SHOP_BRAND)}</b></span></a>
 <nav class="nav" id="nav" aria-label="{s("ui.menu")}">{nav}</nav>
 <div class="tools">
 <div class="lang"><button type="button" class="tbtn lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="{s("ui.lang")}">{ic("globe")}<span>{short}</span></button><ul class="lang-menu" id="lang-menu" hidden>{langs_menu}</ul></div>
 <button type="button" class="tbtn" id="theme-btn" aria-label="{s("ui.theme")}" title="{s("ui.theme")}">{ic("sun", "i-sun")}{ic("moon", "i-moon")}</button>
 <button type="button" class="tbtn burger" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="{s("ui.menu")}">{ic("menu")}</button>
 </div></div></header>
+<div class="quick-bar" aria-label="{s("ct.social")}">{quick_s}</div>
 <main id="main">
 <section class="hero" id="top"><div class="hero-bg" aria-hidden="true"></div><div class="wrap hero-in">
-<p class="kicker">{s("hero.kicker")}</p>
-<div class="hero-media"><span class="ring" aria-hidden="true"></span><span class="ring r2" aria-hidden="true"></span>
-<img class="hero-logo" src="/logo/logo-round-512.png" width="368" height="368" alt="{e(SHOP_BRAND)}"></div>
-<h1><span>{s("hero.h1a")}</span> <span class="gold">{s("hero.h1b")}</span></h1>
-<p class="lead">{s("hero.lead")}</p>
-<p class="sub">{s("hero.sub")}</p>
-<div class="cta-row">{hero_cta}</div>
-<ul class="chips">{chips}</ul>
+<div class="hero-media">{hero_mark}</div>
 </div></section>
-<section class="sec" id="about"><div class="wrap">
-<div class="about">
-<div class="about-t"><p class="label">{s("about.label")}</p><h2>{s("about.h2")}</h2><p>{s("about.p1")}</p><p>{s("about.p2")}</p><p>{s("about.p3")}</p>
-<blockquote class="pos"><p>{s("about.pos")}</p></blockquote><p class="motto">{s("about.motto")}</p></div>
-<div class="about-b">{"".join(banner(n, True) for n in ABOUT_B)}</div>
+<section class="sec deals" id="deals"><div class="wrap">
+<div class="head"><p class="label">{s("deals.label")}</p><h2>{s("deals.h2")}</h2><p class="lead2">{s("deals.s")}</p></div>
+<div class="promo-grid">{promo_cards}</div>
+<div class="deals-in">
+<div class="deals-t"><p>{s("deals.p")}</p><p class="lh">{s("deals.lh")}</p><ul class="ticks">{deals_list}</ul></div>
+<div class="deals-c"><img src="/logo/logo-640.webp" width="320" height="320" alt="" loading="lazy" class="deals-logo"><p class="slogan">{s("deals.slogan")}</p>
+<div class="stack deals-btns">{(btn(TG_CH, "ch", s("cta.channel"), "btn primary") if has(TG_CH) else "")}{(btn(TG_DM, "tg", s("cta.tg"), "btn") if has(TG_DM) else "")}{(btn(wa_link(PHONE, L.get("wa.hello","")), "wa", s("cta.wa"), "btn") if has(WA) else "")}</div><p class="note">{s("deals.note")}</p></div>
 </div>
-<ul class="pillars">{pillars}</ul>
 </div></section>
 <section class="sec alt" id="products"><div class="wrap">
 <div class="head"><p class="label">{s("prod.label")}</p><h2>{s("prod.h2")}</h2><p>{s("prod.lead")}</p></div>
@@ -366,15 +395,6 @@ def build(lang):
 <div class="trust"><h3>{s("trust.h")}</h3><p>{s("trust.p")}</p><ul class="mantra"><li>{s("trust.m1")}</li><li>{s("trust.m2")}</li><li>{s("trust.m3")}</li></ul><p class="quote">{s("phil.quote")}</p></div>
 </div></section>
 {offer_html}
-<section class="sec deals" id="deals"><div class="wrap">
-<div class="head"><p class="label">{s("deals.label")}</p><h2>{s("deals.h2")}</h2><p class="lead2">{s("deals.s")}</p></div>
-<div class="promo-grid">{promo_cards}</div>
-<div class="deals-in">
-<div class="deals-t"><p>{s("deals.p")}</p><p class="lh">{s("deals.lh")}</p><ul class="ticks">{deals_list}</ul></div>
-<div class="deals-c"><img src="/logo/logo-640.webp" width="320" height="320" alt="" loading="lazy" class="deals-logo"><p class="slogan">{s("deals.slogan")}</p>
-<div class="stack deals-btns">{(btn(TG_CH, "ch", s("cta.channel"), "btn primary") if has(TG_CH) else "")}{(btn(TG_DM, "tg", s("cta.tg"), "btn") if has(TG_DM) else "")}{(btn(wa_link(PHONE, L.get("wa.hello","")), "wa", s("cta.wa"), "btn") if has(WA) else "")}</div><p class="note">{s("deals.note")}</p></div>
-</div>
-</div></section>
 <section class="sec alt" id="consult"><div class="wrap"><div class="consult">
 <div class="consult-t"><p class="label">{s("cons.label")}</p><h2>{s("cons.h2")}</h2><p class="lead2">{s("cons.s")}</p><p>{s("cons.p")}</p><ul class="qs">{qs}</ul></div>
 <form class="cb" id="callback" novalidate data-wa="{WA}" data-tpl="{e(L["wa.cb"])}" data-err="{s("cb.err")}" data-p2="{s("cb.p2")}" data-sending="{s("cb.sending")}" data-ok="{s("cb.ok")}" data-fail="{s("cb.fail")}" data-rate="{s("cb.rate")}">
@@ -401,6 +421,16 @@ def build(lang):
 </div>
 </div></section>
 </main>
+<dialog class="about-panel" id="about" aria-labelledby="about-title">
+<div class="about-panel-in">
+<button type="button" class="about-x" data-about-close aria-label="{s("ui.aboutClose")}">{ic("x")}</button>
+<div class="about">
+<div class="about-t"><p class="label">{s("about.label")}</p><h2 id="about-title">{s("about.h2")}</h2><p>{s("about.p1")}</p><p>{s("about.p2")}</p><p>{s("about.p3")}</p>
+<blockquote class="pos"><p>{s("about.pos")}</p></blockquote><p class="motto">{s("about.motto")}</p></div>
+</div>
+<ul class="pillars">{pillars}</ul>
+</div>
+</dialog>
 <footer class="foot"><div class="wrap foot-in">
 <div class="foot-b" dir="ltr"><img src="/logo/logo-round-96.png" width="56" height="56" alt="" loading="lazy"><div><b>{e(SHOP_BRAND)}</b><small>{e(SHOP_LEGAL_SUFFIX)}</small></div></div>
 <div class="foot-t"><p class="slogan-en" lang="en" dir="ltr">{e(SLOGAN_EN)}</p>{"" if lang == "en" else "<p>" + s("f.tag") + "</p>"}<p>{s("f.more")}</p><p>{s("f.world")}</p><p>{s("f.partner")}</p></div>

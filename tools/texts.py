@@ -11,7 +11,7 @@ def t(k, en, ru, ar=None):
 t('meta.title', 'MAGNIT | Premium electronics and technology in Deira, Dubai', 'MAGNIT | Электроника и технологии в Дейре, Дубай')
 t('meta.desc', 'Smartphones, electronics, accessories and professional service in Dubai. Retail at wholesale prices, Trade-In, warranty support and delivery in Dubai and worldwide.', 'Смартфоны, электроника, аксессуары и профессиональный сервис в Дубае. Розница по оптовым ценам, Trade-In, гарантийная поддержка и доставка по Дубаю и по всему миру.')
 t('nav.about', 'About', 'О магазине')
-t('nav.products', 'Products', 'Ассортимент')
+t('nav.products', 'Our products', 'Наша продукция', 'منتجاتنا')
 t('nav.services', 'Services', 'Услуги')
 t('nav.why', 'Why us', 'Почему мы')
 t('nav.deals', 'Offers', 'Акции')
@@ -63,8 +63,8 @@ t('pil.value.h', 'Retail at wholesale prices.', 'Розница по оптов�
 t('pil.value.t', 'We offer retail customers access to competitive wholesale-style pricing. Every request is reviewed individually.', 'Мы даём розничным покупателям доступ к конкурентным ценам в духе оптовых условий. Каждый запрос рассматриваем индивидуально.')
 t('pil.service.h', 'Support beyond the purchase.', 'Поддержка после покупки.')
 t('pil.service.t', 'Trade-In, repair assistance, warranty and post-warranty services, subject to product eligibility and applicable conditions.', 'Trade-In, помощь с ремонтом, гарантийное и послегарантийное обслуживание: при соответствии товара и действующих условий.')
-t('prod.label', 'Products', 'Ассортимент')
-t('prod.h2', 'Everything in one place', 'Всё в одном месте')
+t('prod.label', 'Our products', 'Наша продукция', 'منتجاتنا')
+t('prod.h2', 'Our products', 'Наша продукция', 'منتجاتنا')
 t('prod.lead', 'Explore our selection of smartphones, electronics, accessories and selected lifestyle products. Availability is subject to confirmation.', 'Смартфоны, электроника, аксессуары и отдельные товары для жизни. Наличие уточняется при обращении.')
 t('g.phones', 'Smartphones', 'Смартфоны')
 t('g.computers', 'Laptops, tablets and computers', 'Ноутбуки, планшеты и компьютеры')
@@ -240,23 +240,47 @@ t('off.p1', 'iPhone 18', 'iPhone 18')
 t('off.p2', 'iPhone Duo', 'iPhone Duo')
 t('off.note', 'Product availability, promotional terms and prices are subject to confirmation.', 'Наличие товаров, условия акций и цены подлежат подтверждению.')
 
-t('promo.more', 'Details', 'Подробнее', 'التفاصيل')
+t('promo.more', 'Read the offer', 'Прочитать акцию', 'اقرأ العرض')
 t('promo.1.vid', 'iPhone 18 and iPhone Duo', 'iPhone 18 и iPhone Duo', 'iPhone 18 و iPhone Duo')
-t('promo.1.t', 'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
-  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
-  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae')
+t('promo.1.t',
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae',
+  'iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n~~+971 4 333 8033\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae')
 t('promo.2.vid', 'Accessories at wholesale price', 'Аксессуары в розницу по оптовой цене', 'إكسسوارات بالتجزئة بسعر الجملة')
-t('promo.2.t', 'Electronics, accessories, smart devices\nAccessories at wholesale price in retail\nCurrent prices and special offers are available from our managers\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
-  'Электроника, аксессуары, умные устройства\nАксессуары в розницу по оптовой цене\nАктуальные цены и специальные предложения вы найдёте у наших менеджеров\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
-  'إلكترونيات، إكسسوارات، أجهزة ذكية\nإكسسوارات بالتجزئة بسعر الجملة\nالأسعار الحالية والعروض الخاصة متوفرة لدى مديرينا\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae')
+t('promo.2.t',
+  'Electronics\nAccessories\nSmart devices\nAccessories at wholesale price in retail\nCurrent prices and special offers are available from our managers\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
+  'Электроника\nАксессуары\nУмные устройства\nАксессуары в розницу по оптовой цене\nАктуальные цены и специальные предложения вы найдёте у наших менеджеров\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
+  'إلكترونيات\nإكسسوارات\nأجهزة ذكية\nإكسسوارات بالتجزئة بسعر الجملة\nالأسعار الحالية والعروض الخاصة متوفرة لدى مديرينا\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae')
 t('promo.3.vid', 'Find out exclusive prices from our managers', 'Узнайте уникальные цены у менеджеров', 'اعرفوا الأسعار المميزة من مديرينا')
-t('promo.3.t', 'Find out exclusive prices from our managers\nRetail at wholesale prices\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
+t('promo.3.t',
+  'Find out exclusive prices from our managers\nRetail at wholesale prices\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
   'Узнайте уникальные цены у менеджеров\nРозница по оптовым ценам\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae',
   'اعرفوا الأسعار المميزة من مديرينا\nالتجزئة بأسعار الجملة\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae')
 t('promo.4.vid', 'iPhone 18 Pro Max, special price from our managers', 'iPhone 18 Pro Max, специальная цена у менеджеров', 'iPhone 18 Pro Max، سعر خاص لدى المديرين')
-t('promo.4.t', 'Retail at wholesale prices. Always with you\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nFind out the unique special price from our managers\n+971 55 868 8151\n+971 58 824 2913',
+t('promo.4.t',
+  'Retail at wholesale prices. Always with you\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nFind out the unique special price from our managers\n+971 55 868 8151\n+971 58 824 2913',
   'Розница по оптовым ценам. Всегда с вами\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nУзнайте уникальную специальную цену у наших менеджеров\n+971 55 868 8151\n+971 58 824 2913',
   'التجزئة بأسعار الجملة. دائماً معكم\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nاعرفوا السعر الخاص المميز من مديرينا\n+971 55 868 8151\n+971 58 824 2913')
+
+# Витрины Арсена (8 штук). vitrina-3 с словом final не используем: для планшетов берём vitrina-9.
+# Подпись витрины 1 на сайте: POCO & Galaxy (на самом баннере есть слово final, баннер не правим).
+t('b.01', 'POCO & Galaxy', 'POCO & Galaxy', 'POCO & Galaxy')
+t('b.01.c', 'POCO and Galaxy smartphones. Availability is confirmed on request.', 'Смартфоны POCO и Galaxy. Наличие подтверждается при обращении.', 'هواتف POCO و Galaxy. يتأكد التوفر عند التواصل.')
+t('b.02', 'Electronics & Gadgets', 'Электроника и гаджеты', 'إلكترونيات وأجهزة')
+t('b.02.c', 'Electronics and gadgets. Availability is confirmed on request.', 'Электроника и гаджеты. Наличие подтверждается при обращении.', 'إلكترونيات وأجهزة. يتأكد التوفر عند التواصل.')
+t('b.03', 'Tablets & iPad', 'Планшеты и iPad', 'أجهزة لوحية و iPad')
+t('b.03.c', 'Tablets and iPad. Availability is confirmed on request.', 'Планшеты и iPad. Наличие подтверждается при обращении.', 'أجهزة لوحية و iPad. يتأكد التوفر عند التواصل.')
+t('b.04', 'Smart Devices', 'Смарт-устройства', 'أجهزة ذكية')
+t('b.04.c', 'Smart devices. Availability is confirmed on request.', 'Смарт-устройства. Наличие подтверждается при обращении.', 'أجهزة ذكية. يتأكد التوفر عند التواصل.')
+t('b.05', 'Mobile Accessories', 'Мобильные аксессуары', 'إكسسوارات الجوال')
+t('b.05.c', 'Mobile accessories. Availability is confirmed on request.', 'Мобильные аксессуары. Наличие подтверждается при обращении.', 'إكسسوارات الجوال. يتأكد التوفر عند التواصل.')
+t('b.06', 'Gaming & Entertainment', 'Игры и развлечения', 'ألعاب وترفيه')
+t('b.06.c', 'Gaming and entertainment. Availability is confirmed on request.', 'Игры и развлечения. Наличие подтверждается при обращении.', 'ألعاب وترفيه. يتأكد التوفر عند التواصل.')
+t('b.07', 'Smartphones', 'Смартфоны', 'هواتف ذكية')
+t('b.07.c', 'Samsung smartphones. Availability is confirmed on request.', 'Смартфоны Samsung. Наличие подтверждается при обращении.', 'هواتف Samsung. يتأكد التوفر عند التواصل.')
+t('b.08', 'Fragrances & Lifestyle', 'Парфюмерия и стиль жизни', 'عطور وأسلوب حياة')
+t('b.08.c', 'Fragrances and lifestyle. Availability is confirmed on request.', 'Парфюмерия и стиль жизни. Наличие подтверждается при обращении.', 'عطور وأسلوب حياة. يتأكد التوفر عند التواصل.')
+t('ui.aboutClose', 'Close', 'Закрыть', 'إغلاق')
 
 for k, v in T.items():
     for l, s in v.items():

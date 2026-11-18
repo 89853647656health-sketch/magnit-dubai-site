@@ -1,32 +1,27 @@
-"""Печатные QR-листы MAGNIT: логотип и код на белом фоне, как в образце GRAND PHONES."""
+"""Печатные QR-листы MAGNIT: логотип, название MAGNIT, код. Без подписей и адреса."""
 import os
 import qrcode, numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'qr-print')
-LOGO = os.path.join(ROOT, 'site', 'logo', 'logo-round-512.png')
+LOGO = os.path.join(ROOT, 'site', 'logo', 'logo-full.jpg')
 BASE = 'https://magnit-dubai.onrender.com/'
-# Основной лист - английская главная. Отдельные листы для /ru/ и /ar/.
 SHEETS = [
-    ('magnit-qr', BASE, 'magnit-dubai.onrender.com'),
-    ('magnit-qr-ru', BASE + 'ru/', 'magnit-dubai.onrender.com/ru/'),
-    ('magnit-qr-ar', BASE + 'ar/', 'magnit-dubai.onrender.com/ar/'),
+    ('magnit-qr', BASE),
+    ('magnit-qr-ru', BASE + 'ru/'),
+    ('magnit-qr-ar', BASE + 'ar/'),
 ]
 W, H = 1480, 2528
 QR_COLOR = (11, 16, 24)
-CAPTION_COLOR = (11, 16, 24)
-
-
-def qr_matrix(data):
-    q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_Q, border=4)
-    q.add_data(data)
-    q.make(fit=True)
-    return q.get_matrix()
+NAME = 'MAGNIT'
 
 
 def qr_image(data, scale=24):
-    m = qr_matrix(data)
+    q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_Q, border=4)
+    q.add_data(data)
+    q.make(fit=True)
+    m = q.get_matrix()
     a = np.array(m, dtype=np.uint8)
     img = Image.fromarray(np.where(a == 1, 0, 255).astype(np.uint8)).resize(
         (a.shape[1] * scale, a.shape[0] * scale), Image.NEAREST
@@ -45,40 +40,40 @@ def qr_image(data, scale=24):
 
 def font(size):
     for path in (
+        '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
         '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-        '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-        '/usr/share/fonts/truetype/freefont/FreeSans.ttf',
     ):
         if os.path.isfile(path):
             return ImageFont.truetype(path, size)
     return ImageFont.load_default()
 
 
-def compose(url, caption):
+def compose(url):
+    # Logo at top, then MAGNIT, then QR. Generous empty space under the code
+    # so phone UI does not cover it.
     canvas = Image.new('RGB', (W, H), (255, 255, 255))
-    logo = Image.open(LOGO).convert('RGBA')
-    logo_size = 880
+    logo = Image.open(LOGO).convert('RGB')
+    logo_size = 620
     logo = logo.resize((logo_size, logo_size), Image.LANCZOS)
-    qr = qr_image(url)
-    qr_size = 1000
-    qr = qr.resize((qr_size, qr_size), Image.NEAREST)
-    logo_y = 200
-    qr_y = logo_y + logo_size + 120
-    canvas.paste(logo, ((W - logo_size) // 2, logo_y), logo)
-    canvas.paste(qr, ((W - qr_size) // 2, qr_y))
+    qr = qr_image(url).resize((780, 780), Image.NEAREST)
+    logo_y = 120
+    name_y = logo_y + logo_size + 28
+    qr_y = name_y + 100
+    canvas.paste(logo, ((W - logo_size) // 2, logo_y))
     draw = ImageDraw.Draw(canvas)
-    f = font(36)
-    bbox = draw.textbbox((0, 0), caption, font=f)
+    f = font(72)
+    bbox = draw.textbbox((0, 0), NAME, font=f)
     tw = bbox[2] - bbox[0]
-    cap_y = qr_y + qr_size + 36
-    draw.text(((W - tw) // 2, cap_y), caption, fill=CAPTION_COLOR, font=f)
+    draw.text(((W - tw) // 2, name_y), NAME, fill=QR_COLOR, font=f)
+    canvas.paste(qr, ((W - 780) // 2, qr_y))
     return canvas
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    for name, url, caption in SHEETS:
-        im = compose(url, caption)
+    for name, url in SHEETS:
+        im = compose(url)
         png = os.path.join(OUT, name + '.png')
         jpg = os.path.join(OUT, name + '.jpg')
         im.save(png, optimize=True)
@@ -86,7 +81,7 @@ def main():
         check = cv2.imread(png)
         got, _, _ = cv2.QRCodeDetector().detectAndDecode(check)
         assert got == url, (name, got, url)
-        print('wrote', name, url, os.path.getsize(png), os.path.getsize(jpg))
+        print('wrote', name, url, 'qr_bottom', 120 + 620 + 28 + 100 + 780, 'page', H)
 
 
 if __name__ == '__main__':

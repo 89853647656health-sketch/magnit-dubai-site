@@ -77,7 +77,7 @@ if os.path.isdir(banner_dir):
             print(f'WARN banner {n}: {w}x{h} ratio {ratio:.4f}, ожидается 9:16 ({target:.4f}). Не обрезаю, только масштаб.')
         else:
             print(f'banner {n}: {w}x{h}' + (' (рабочий размер 2160x3840)' if (w, h) == (2160, 3840) else ' (9:16, размер не 2160x3840)'))
-        for tw in (360, 540, 720, 1080):
+        for tw in (360, 540, 560, 720, 1008, 1080):
             if w >= tw or tw == 360:
                 th = round(tw * h / w)
                 r = im if tw == w else im.resize((tw, th), Image.LANCZOS)
@@ -119,18 +119,9 @@ for y in range(630):
         int(16 + 40 * (1 - t)),
         int(24 + 70 * (1 - t)),
     ))
-# Если есть lockup (знак + надпись), используем его на OG, иначе квадратный знак.
-lockup_p = os.path.join(SRC, 'logo', 'logo-lockup-from-intro-frame.jpg')
-if os.path.isfile(lockup_p):
-    lk = Image.open(lockup_p).convert('RGB')
-    lw, lh = lk.size
-    max_h, max_w = 520, 900
-    scale = min(max_w / lw, max_h / lh)
-    lk = lk.resize((round(lw * scale), round(lh * scale)), Image.LANCZOS)
-    og.paste(lk, ((1200 - lk.width) // 2, (630 - lk.height) // 2))
-else:
-    mark = logo.resize((500, 500), Image.LANCZOS)
-    og.paste(mark, ((1200 - 500) // 2, (630 - 500) // 2))
+# Официальный квадратный логотип по центру, без обрезки и без временного кадра из ролика.
+lk = logo.resize((600, 600), Image.LANCZOS)
+og.paste(lk, ((1200 - lk.width) // 2, (630 - lk.height) // 2))
 og.save(os.path.join(SITE, 'og.jpg'), quality=86, optimize=True)
 
 # Ролик спецпредложения: копируем как есть, постер из первого кадра (без перемонтажа).

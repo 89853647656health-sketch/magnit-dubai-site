@@ -14,6 +14,7 @@
 - TikTok: https://www.tiktok.com/@magnit.dubai
 - Telegram: https://t.me/magnitae
 - Почта: Magnit.dxb@gmail.com
+- Логотип: официальный файл Арсена (18.11.2026), оригинал в `/home/box/shared/backup/magnit-media/originals/MAGNIT-logo-original-2026-11-18.jpg`.
 - Заставка: ролик `ARSENAL-video-music-v2-2026-11-18.mp4` (в имени ARSENAL, по кадрам это MAGNIT). Нужно подтверждение Арсена, что это нужный ролик.
 
 ## Сборка
