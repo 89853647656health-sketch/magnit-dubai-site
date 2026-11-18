@@ -1,0 +1,6 @@
+src-media/
+shots/
+__pycache__/
+*.pyc
+_preview/
+PREP_NOTES.md

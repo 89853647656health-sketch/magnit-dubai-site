@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--mid:#100C13;--bur:#55243D;--wine:#783957;--gold:#D6AD69;--champ:#F6D9A0;--tx:#F6EFE6;--mut:#BFAFB8;--card:#1A1320;--line:rgba(214,173,105,.28);--f:'Lato',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--mid);color:var(--tx);font:400 15px/1.5 var(--f)}
+body{min-height:100vh;background:radial-gradient(1200px 600px at 80% -10%,rgba(120,57,87,.35),transparent 60%),var(--mid)}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;flex-direction:column;line-height:1.1}
+.brand b{font-weight:900;letter-spacing:.08em;color:var(--champ);font-size:20px}
+.brand small{color:var(--gold);letter-spacing:.2em;font-size:11px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700;text-decoration:none;color:var(--tx)}
+.btn:hover{border-color:var(--gold)}
+.btn.pri{background:linear-gradient(135deg,var(--champ),var(--gold) 60%,#B98A45);color:var(--mid);border-color:transparent}
+.btn.sm{min-height:34px;padding:5px 10px;font-size:13.5px;border-radius:10px}
+.btn[disabled]{opacity:.55;cursor:default}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.login{max-width:380px;margin:12vh auto 0;display:grid;gap:12px}
+.login h1{margin:0;font-size:22px;color:var(--champ)}
+input[type=password],input[type=search],textarea,select{width:100%;background:var(--mid);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,173,105,.2)}
+.msg{min-height:1.4em;margin:0;color:#E9A0A0;font-weight:700}
+.msg.ok{color:var(--champ)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{border-radius:999px}
+.tab.on{background:var(--wine);border-color:var(--gold)}
+.tab i{font-style:normal;opacity:.75;margin-inline-start:4px}
+.bar .q{flex:1 1 220px}
+.list{display:grid;gap:12px}
+.item{display:grid;gap:10px;border-inline-start:4px solid var(--gold)}
+.item.st-called{border-inline-start-color:var(--wine)}
+.item.st-closed{border-inline-start-color:#5d5560;opacity:.85}
+.row1{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+.nm{font-size:18px;font-weight:900}
+.meta{color:var(--mut);font-size:13px}
+.ph{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ph a.num{color:var(--champ);font-weight:700;font-size:16px;text-decoration:none;direction:ltr;unicode-bidi:embed}
+.int{white-space:pre-wrap;word-break:break-word;background:rgba(85,36,61,.35);border-radius:10px;padding:8px 10px;margin:0}
+.ctl{display:grid;grid-template-columns:200px 1fr auto;gap:8px;align-items:start}
+.ctl textarea{min-height:40px;resize:vertical}
+.empty{color:var(--mut);text-align:center;padding:40px 0}
+.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700;background:var(--bur);color:var(--champ)}
+.badge.new{background:var(--gold);color:var(--mid)}
+@media (max-width:640px){.ctl{grid-template-columns:1fr}.top{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div class="brand"><b>REPLACE_BRAND</b><small>REPLACE_LEGAL_SUFFIX</small></div>
+<div class="ph"><button class="btn sm" id="langBtn" type="button">EN</button><button class="btn sm" id="logoutBtn" type="button" hidden></button></div></div>
+<form class="card login" id="loginForm" autocomplete="off">
+<h1 id="tLogin"></h1>
+<input type="password" id="pass" autocomplete="current-password" maxlength="200" required>
+<button class="btn pri" type="submit" id="loginBtn"></button>
+<p class="msg" id="loginMsg" role="alert"></p>
+</form>
+<div id="app" hidden>
+<div class="bar">
+<div class="tabs" id="tabs"></div>
+<input type="search" class="q" id="q" maxlength="100">
+<button class="btn" type="button" id="refreshBtn"></button>
+<button class="btn" type="button" id="csvBtn"></button>
+</div>
+<p class="msg" id="appMsg" role="status"></p>
+<div class="list" id="list"></div>
+</div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var T = {
+    ru: { login: 'Вход в админку заявок', pass: 'Пароль', enter: 'Войти', logout: 'Выйти', bad: 'Неверный пароль. Осталось попыток: {n}.', locked: 'Слишком много попыток. Вход закрыт на {n} мин.', notcfg: 'Пароль не задан. Запустите setAdminPassword в редакторе Apps Script.', err: 'Ошибка связи. Попробуйте ещё раз.', session: 'Сессия истекла, войдите снова.',
+      all: 'Все', new: 'Новые', called: 'Перезвонили', closed: 'Закрыты', search: 'Поиск: имя, телефон, текст, ID', refresh: 'Обновить', csv: 'Скачать CSV', empty: 'Заявок нет.',
+      sNew: 'новая', sCalled: 'перезвонили', sClosed: 'закрыта', note: 'Заметка', save: 'Сохранить', saved: 'Сохранено', call: 'Позвонить', wa: 'WhatsApp', lang: 'Язык', page: 'Страница', upd: 'Изменено', loading: 'Загрузка...', tg: 'Telegram' },
+    en: { login: 'Callback requests admin', pass: 'Password', enter: 'Sign in', logout: 'Sign out', bad: 'Wrong password. Attempts left: {n}.', locked: 'Too many attempts. Sign-in locked for {n} min.', notcfg: 'Password is not set. Run setAdminPassword in the Apps Script editor.', err: 'Connection error. Please try again.', session: 'Session expired, please sign in again.',
+      all: 'All', new: 'New', called: 'Called back', closed: 'Closed', search: 'Search: name, phone, text, ID', refresh: 'Refresh', csv: 'Download CSV', empty: 'No requests.',
+      sNew: 'new', sCalled: 'called back', sClosed: 'closed', note: 'Note', save: 'Save', saved: 'Saved', call: 'Call', wa: 'WhatsApp', lang: 'Language', page: 'Page', upd: 'Updated', loading: 'Loading...', tg: 'Telegram' }
+  };
+  var SKEY = { new: 'sNew', called: 'sCalled', closed: 'sClosed' };
+  var lang = 'ru', token = null, status = '', data = { items: [], counts: {} }, qTimer = null;
+  try { lang = localStorage.getItem('shop-admin-lang') === 'en' ? 'en' : 'ru'; token = sessionStorage.getItem('shop-admin-token'); } catch (e) {}
+  function $(id) { return document.getElementById(id); }
+  function t(k, n) { return String(T[lang][k]).replace('{n}', n == null ? '' : n); }
+  function el(tag, attrs, kids) {
+    var x = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === 'text') x.textContent = attrs[k]; else if (k === 'cls') x.className = attrs[k]; else x.setAttribute(k, attrs[k]); });
+    (kids || []).forEach(function (c) { if (c) x.appendChild(c); });
+    return x;
+  }
+  function call(fn, args, ok, fail) {
+    var r = google.script.run.withSuccessHandler(function (res) { ok(res); }).withFailureHandler(function (err) {
+      if (String(err && err.message || err).indexOf('auth') >= 0) { signOut(true); return; }
+      (fail || function () { msg('appMsg', t('err')); })(err);
+    });
+    r[fn].apply(r, args);
+  }
+  function msg(id, text, good) { var m = $(id); m.textContent = text || ''; m.className = 'msg' + (good ? ' ok' : ''); }
+  function saveToken(v) { token = v; try { if (v) sessionStorage.setItem('shop-admin-token', v); else sessionStorage.removeItem('shop-admin-token'); } catch (e) {} }
+  function filter() { return { status: status, q: $('q').value.trim() }; }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    $('langBtn').textContent = lang === 'ru' ? 'EN' : 'RU';
+    $('tLogin').textContent = t('login'); $('pass').placeholder = t('pass'); $('pass').setAttribute('aria-label', t('pass'));
+    $('loginBtn').textContent = t('enter'); $('logoutBtn').textContent = t('logout');
+    $('q').placeholder = t('search'); $('q').setAttribute('aria-label', t('search'));
+    $('refreshBtn').textContent = t('refresh'); $('csvBtn').textContent = t('csv');
+    renderTabs(); renderList();
+  }
+
+  function showApp(on) { $('loginForm').hidden = on; $('app').hidden = !on; $('logoutBtn').hidden = !on; }
+  function signOut(expired) {
+    if (token) { try { google.script.run.adminLogout(token); } catch (e) {} }
+    saveToken(null); showApp(false); data = { items: [], counts: {} }; $('pass').value = '';
+    msg('loginMsg', expired ? t('session') : ''); $('pass').focus();
+  }
+
+  function load() {
+    msg('appMsg', t('loading'), true);
+    call('adminList', [token, filter()], function (res) { data = res; msg('appMsg', ''); renderTabs(); renderList(); });
+  }
+
+  function renderTabs() {
+    var box = $('tabs'); box.textContent = '';
+    [['', 'all'], ['new', 'new'], ['called', 'called'], ['closed', 'closed']].forEach(function (p) {
+      var b = el('button', { type: 'button', cls: 'btn sm tab' + (status === p[0] ? ' on' : ''), 'aria-pressed': String(status === p[0]) }, [document.createTextNode(t(p[1])), el('i', { text: String((data.counts || {})[p[0] || 'all'] || 0) })]);
+      b.addEventListener('click', function () { status = p[0]; load(); });
+      box.appendChild(b);
+    });
+  }
+
+  function renderList() {
+    var box = $('list'); box.textContent = '';
+    if (!data.items || !data.items.length) { box.appendChild(el('p', { cls: 'empty', text: t('empty') })); return; }
+    data.items.forEach(function (it) {
+      var digits = String(it.phone).replace(/[^\d+]/g, '');
+      var sel = el('select', { 'aria-label': 'Status' });
+      ['new', 'called', 'closed'].forEach(function (s) { var o = el('option', { value: s, text: t(SKEY[s]) }); if (s === it.status) o.selected = true; sel.appendChild(o); });
+      var note = el('textarea', { rows: '1', maxlength: '1000', placeholder: t('note'), 'aria-label': t('note') }); note.value = it.note || '';
+      var save = el('button', { type: 'button', cls: 'btn sm pri', text: t('save') });
+      var meta = el('div', { cls: 'meta', text: it.created + ' (Dubai) | ' + it.id + ' | ' + t('lang') + ': ' + (it.lang || '-').toUpperCase() + ' | ' + t('page') + ': ' + (it.page || '-') + (it.tg ? ' | ' + t('tg') + ': ' + it.tg : '') + (it.updated && it.updated !== it.created ? ' | ' + t('upd') + ': ' + it.updated : '') });
+      var card = el('article', { cls: 'card item st-' + it.status }, [
+        el('div', { cls: 'row1' }, [el('span', { cls: 'nm', text: it.name }), el('span', { cls: 'badge ' + it.status, text: t(SKEY[it.status]) })]),
+        el('div', { cls: 'ph' }, [el('a', { cls: 'num', href: 'tel:' + digits, text: it.phone }), el('a', { cls: 'btn sm', href: 'tel:' + digits, text: t('call') }), el('a', { cls: 'btn sm', href: 'https://wa.me/' + digits.replace(/\D/g, ''), target: '_blank', rel: 'noopener', text: t('wa') })]),
+        it.interest ? el('p', { cls: 'int', text: it.interest }) : null,
+        el('div', { cls: 'ctl' }, [sel, note, save]),
+        meta
+      ]);
+      function push(patch) {
+        save.disabled = true; sel.disabled = true;
+        call('adminUpdate', [token, it.id, patch], function (res) {
+          save.disabled = false; sel.disabled = false;
+          if (!res || !res.ok) { msg('appMsg', t('err')); return; }
+          var prev = it.status; it.status = sel.value; it.note = note.value; it.updated = res.updated;
+          if (prev !== it.status && data.counts) { data.counts[prev]--; data.counts[it.status]++; }
+          msg('appMsg', t('saved') + ': ' + it.id, true);
+          if (status && status !== it.status) { data.items = data.items.filter(function (x) { return x !== it; }); }
+          renderTabs(); renderList();
+        }, function () { save.disabled = false; sel.disabled = false; msg('appMsg', t('err')); });
+      }
+      sel.addEventListener('change', function () { push({ status: sel.value }); });
+      save.addEventListener('click', function () { push({ status: sel.value, note: note.value }); });
+      box.appendChild(card);
+    });
+  }
+
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = $('pass').value; if (!p) return;
+    $('loginBtn').disabled = true; msg('loginMsg', '');
+    call('adminLogin', [p], function (res) {
+      $('loginBtn').disabled = false; $('pass').value = '';
+      if (res && res.ok) { saveToken(res.token); showApp(true); load(); return; }
+      var e2 = res && res.error;
+      msg('loginMsg', e2 === 'locked' ? t('locked', res.wait) : e2 === 'not_configured' ? t('notcfg') : t('bad', res && res.left));
+    }, function () { $('loginBtn').disabled = false; msg('loginMsg', t('err')); });
+  });
+  $('logoutBtn').addEventListener('click', function () { signOut(false); });
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ru' ? 'en' : 'ru'; try { localStorage.setItem('shop-admin-lang', lang); } catch (e) {} applyLang(); });
+  $('refreshBtn').addEventListener('click', load);
+  $('q').addEventListener('input', function () { clearTimeout(qTimer); qTimer = setTimeout(load, 350); });
+  $('csvBtn').addEventListener('click', function () {
+    var b = $('csvBtn'); b.disabled = true;
+    call('adminExportCsv', [token, filter()], function (res) {
+      b.disabled = false;
+      var blob = new Blob(['\ufeff' + res.csv], { type: 'text/csv;charset=utf-8' });
+      var a = el('a', { href: URL.createObjectURL(blob), download: res.name });
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    }, function () { b.disabled = false; msg('appMsg', t('err')); });
+  });
+
+  applyLang();
+  if (token) { showApp(true); load(); } else { showApp(false); $('pass').focus(); }
+})();
+</script>
+</body>
+</html>
