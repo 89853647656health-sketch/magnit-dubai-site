@@ -7,6 +7,7 @@ import qrcode, numpy as np, cv2
 from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from texts import T
+from products_ld import PRODUCTS_LD
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); SITE = os.path.join(ROOT, 'site')
 
 # Контакты: пакет магазина (адрес и два мобильных) + соцсети и почта, подтверждённые Арсеном.
@@ -53,7 +54,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261118l'
+CSS_V = '20261122a'
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
@@ -176,6 +177,8 @@ def build(lang):
     def num(n): return (f'{n:02d}'.translate(FADIG) if lang == 'fa' else f'{n:02d}')
     code, name, short, d = next(x for x in LANGS if x[0] == lang)
     base = '/' if lang == 'en' else f'/{lang}/'
+    privacy_href = f'{base}privacy/'
+    terms_href = f'{base}terms/'
     def banner(n, eager=False):
         if not banner_exists(n):
             return ''
@@ -254,6 +257,7 @@ def build(lang):
         'hasMap': MAP, 'sameAs': list(dict.fromkeys(u for u in (IG, FB, TT, TG_CH, TG_DM) if has(u)))}
     if has(EMAIL): ld_obj['email'] = EMAIL
     LD = json.dumps(ld_obj, ensure_ascii=False).replace('</', '<\\/')
+    LD_PRODUCTS = json.dumps(PRODUCTS_LD, ensure_ascii=False).replace('</', '<\\/')
 
     # ссылки в подвале и на контактах: только подтверждённые
     foot_items = []
@@ -339,7 +343,8 @@ def build(lang):
 <link rel="canonical" href="{URL}{"" if lang == "en" else lang + "/"}">{alt_links}
 <meta property="og:type" content="website"><meta property="og:site_name" content="{e(SHOP_BRAND)}"><meta property="og:title" content="{s("meta.title")}"><meta property="og:description" content="{s("meta.desc")}"><meta property="og:image" content="{URL}og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="{URL}{"" if lang == "en" else lang + "/"}"><meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{LD}</script>
-<link rel="icon" type="image/png" href="/logo/logo-round-64.png"><link rel="apple-touch-icon" href="/logo/logo-round-180.png"><link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">{LD_PRODUCTS}</script>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/logo/logo-round-64.png"><link rel="apple-touch-icon" href="/logo/logo-round-180.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/lato-black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
 <script src="/assets/boot.js?v={CSS_V}"></script>
@@ -363,6 +368,7 @@ def build(lang):
 <main id="main">
 <section class="hero" id="top"><div class="hero-bg" aria-hidden="true"></div><div class="wrap hero-in">
 <div class="hero-media">{hero_mark}</div>
+<div class="hero-info"><div class="hero-info-in"><h1>{s("hero.h1")}</h1><p class="lead">{s("hero.lead")}</p></div></div>
 </div></section>
 <section class="sec deals" id="deals"><div class="wrap">
 <div class="head"><p class="label">{s("deals.label")}</p><h2>{s("deals.h2")}</h2><p class="lead2">{s("deals.s")}</p></div>
@@ -435,7 +441,7 @@ def build(lang):
 <div class="foot-b" dir="ltr"><img src="/logo/logo-round-96.png" width="56" height="56" alt="" loading="lazy"><div><b>{e(SHOP_BRAND)}</b><small>{e(SHOP_LEGAL_SUFFIX)}</small></div></div>
 <div class="foot-t"><p class="slogan-en" lang="en" dir="ltr">{e(SLOGAN_EN)}</p>{"" if lang == "en" else "<p>" + s("f.tag") + "</p>"}<p>{s("f.more")}</p><p>{s("f.world")}</p><p>{s("f.partner")}</p></div>
 {foot_s}
-<p class="foot-n">{s("prod.note")}</p><p class="foot-c">{s("f.rights")}</p>
+<p class="foot-n">{s("prod.note")}</p><p class="foot-legal"><a href="{privacy_href}">{s("leg.privacy")}</a><span aria-hidden="true"> · </span><a href="{terms_href}">{s("leg.terms")}</a></p><p class="foot-c">{s("f.rights")}</p>
 </div></footer>
 {fab_html}
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="{e(SHOP_BRAND)}" hidden data-order="{lb_order}">
@@ -458,6 +464,6 @@ for c, *_ in LANGS: print(build(c))
 json.dump({'name': SHOP_BRAND, 'short_name': SHOP_BRAND, 'start_url': '/', 'display': 'browser', 'background_color': '#0B1018', 'theme_color': '#0B1018',
            'icons': [{'src': '/logo/logo-round-192.png', 'sizes': '192x192', 'type': 'image/png'}, {'src': '/logo/logo-round-512.png', 'sizes': '512x512', 'type': 'image/png'}]},
           open(os.path.join(SITE, 'site.webmanifest'), 'w'))
-open(os.path.join(SITE, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {URL}sitemap.xml\n')
-open(os.path.join(SITE, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{URL}{"" if c == "en" else c + "/"}</loc></url>' for c, *_ in LANGS) + '</urlset>\n')
+from write_extra import write_extra
+write_extra(SITE, URL, LANGS, T, CSS_V)
 print('qr ok', URL)

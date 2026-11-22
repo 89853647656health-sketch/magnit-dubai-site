@@ -296,3 +296,122 @@ for k, ar in AR.items():
     T[k]['ar'] = ar
 missing_ar = [k for k in T if 'ar' not in T[k]]
 assert not missing_ar, missing_ar
+# Visibility copy 2026-11-22: soften unverified promises after AR merge.
+# No em dashes, asterisks, hashes or brackets in public copy.
+
+def _vis(k, en, ru, ar):
+    if k not in T:
+        T[k] = {}
+    T[k]['en'] = en
+    T[k]['ru'] = ru
+    T[k]['ar'] = ar
+
+_vis('hero.h1',
+    'MAGNIT, electronics shop in Deira, Dubai',
+    'MAGNIT, магазин электроники в Дейре, Дубай',
+    'MAGNIT، متجر إلكترونيات في ديرة، دبي')
+_vis('meta.desc',
+    'Smartphones, electronics and accessories in Dubai. Prices and stock are confirmed with a manager. Ask a manager about Trade-In, warranty and delivery.',
+    'Смартфоны, электроника и аксессуары в Дубае. Цену и наличие уточняйте у менеджера. Условия Trade-In, гарантии и доставки тоже уточняйте у менеджера.',
+    'هواتف ذكية وإلكترونيات وإكسسوارات في دبي. يُؤكد السعر والتوفر لدى المدير. شروط Trade-In والضمان والتوصيل يُوضحها المدير أيضا.')
+_vis('chip.tradein',
+    'Ask a manager about Trade-In',
+    'Trade-In уточняйте у менеджера',
+    'استفسر من المدير عن Trade-In')
+_vis('chip.repair',
+    'Ask a manager about repair',
+    'Ремонт уточняйте у менеджера',
+    'استفسر من المدير عن الإصلاح')
+_vis('chip.warranty',
+    'Ask a manager about warranty',
+    'Гарантию уточняйте у менеджера',
+    'استفسر من المدير عن الضمان')
+_vis('chip.delivery',
+    'Delivery terms are confirmed with a manager',
+    'Условия доставки уточняйте у менеджера',
+    'شروط التوصيل يُؤكدها المدير')
+_vis('pil.service.t',
+    'Ask a manager about Trade-In, repair and warranty. Terms are confirmed with the team and are not published as a public offer on this page.',
+    'Условия Trade-In, ремонта и гарантии уточняйте у менеджера. На этой странице они не публикуются как публичная оферта.',
+    'استفسر من المدير عن Trade-In والإصلاح والضمان. لا تُنشر الشروط في هذه الصفحة كعرض عام.')
+_vis('srv.lead',
+    'Ask a manager about Trade-In, repair, warranty and delivery. Special conditions for returning customers are also confirmed with the team.',
+    'Условия Trade-In, ремонта, гарантии и доставки уточняйте у менеджера. Особые условия для постоянных клиентов тоже подтверждает команда.',
+    'استفسر من المدير عن Trade-In والإصلاح والضمان والتوصيل. الشروط الخاصة للعملاء الدائمين يؤكدها الفريق أيضا.')
+_vis('s.tradein.s',
+    'Ask a manager whether Trade-In is available for your device.',
+    'Уточняйте у менеджера, доступен ли Trade-In для вашего устройства.',
+    'اسأل المدير ما إذا كان Trade-In متاحا لجهازك.')
+_vis('s.tradein.m',
+    'This page does not publish Trade-In terms as a public offer.\nIf you want to ask about an exchange, contact a manager and provide the model and condition of your device.\nAny assessment and final terms are confirmed only by the team.',
+    'На этой странице условия Trade-In не публикуются как публичная оферта.\nЕсли хотите спросить об обмене, напишите менеджеру и укажите модель и состояние устройства.\nОценку и итоговые условия подтверждает только команда.',
+    'لا تنشر هذه الصفحة شروط Trade-In كعرض عام.\nإذا أردت السؤال عن الاستبدال، راسل المدير واذكر موديل الجهاز وحالته.\nالتقييم والشروط النهائية يؤكدها الفريق فقط.')
+_vis('s.repair.s',
+    'Ask a manager about repair and service options.',
+    'Условия ремонта и сервиса уточняйте у менеджера.',
+    'استفسر من المدير عن خيارات الإصلاح والخدمة.')
+_vis('s.repair.m',
+    'This page does not promise repair or service terms.\nA manager can tell you what is possible for a specific device after reviewing your request.',
+    'На этой странице ремонт и сервис не обещаются как готовые условия.\nМенеджер скажет, что возможно для конкретного устройства, после вашего запроса.',
+    'لا تعد هذه الصفحة بشروط إصلاح أو خدمة جاهزة.\nيخبرك المدير بما هو ممكن لجهاز محدد بعد مراجعة طلبك.')
+_vis('s.warranty.s',
+    'Ask a manager about warranty terms for a specific item.',
+    'Условия гарантии по конкретной позиции уточняйте у менеджера.',
+    'استفسر من المدير عن شروط الضمان للصنف المحدد.')
+_vis('s.warranty.m',
+    'This page does not publish warranty terms as a public offer.\nAsk a manager about the conditions that apply to the item you are considering.',
+    'На этой странице гарантия не публикуется как публичная оферта.\nУточняйте у менеджера условия, которые относятся к выбранному товару.',
+    'لا تنشر هذه الصفحة شروط الضمان كعرض عام.\nاسأل المدير عن الشروط التي تنطبق على الصنف الذي تفكر فيه.')
+_vis('s.delivery.s',
+    'Delivery terms are confirmed with a manager.',
+    'Условия доставки уточняйте у менеджера.',
+    'شروط التوصيل يُؤكدها المدير.')
+_vis('s.delivery.m',
+    'This page does not publish delivery areas, times or prices as a public offer.\nTell a manager your city, and the team will confirm whether delivery is possible and on what terms.',
+    'На этой странице зоны, сроки и стоимость доставки не публикуются как публичная оферта.\nНазовите менеджеру город, и команда подтвердит, возможна ли доставка и на каких условиях.',
+    'لا تنشر هذه الصفحة مناطق التوصيل أو مدده أو أسعاره كعرض عام.\nأخبر المدير بمدينتك، ويؤكد الفريق إن كان التوصيل ممكنا وبأي شروط.')
+_vis('leg.privacy', 'Privacy notice', 'Уведомление о конфиденциальности', 'إشعار الخصوصية')
+_vis('leg.terms', 'Terms', 'Условия', 'الشروط')
+_vis('leg.privacy.h1', 'Privacy notice', 'Уведомление о конфиденциальности', 'إشعار الخصوصية')
+_vis('leg.terms.h1', 'Terms of use', 'Условия использования', 'شروط الاستخدام')
+_vis('leg.updated', 'This page was prepared on 22 November 2026 as a draft notice. Fields that the shop owner must confirm are marked in the text. This is not legal advice.',
+    'Страница подготовлена 22 ноября 2026 года как черновик уведомления. Поля, которые должен подтвердить владелец магазина, отмечены в тексте. Это не юридическая консультация.',
+    'أُعدّت هذه الصفحة في 22 نوفمبر 2026 كمسودة إشعار. الحقول التي يجب أن يؤكدها مالك المتجر مذكورة في النص. هذه ليست استشارة قانونية.')
+_vis('leg.privacy.body',
+    'This website is a public visiting card for MAGNIT in Dubai.\nThe legal name of the operator, the data protection officer, the place where enquiry data are stored, and the retention period must be confirmed by the shop owner before this notice can be treated as a finished policy.\nIf you write to the shop through WhatsApp, Telegram, email or a request form, the shop may receive your name, phone number, city and the text of your question in order to reply to that enquiry.\nDo not send payment card numbers or identity documents through the website form.\nThe current public contacts shown on the visiting card are used to reach the shop. Other addresses or numbers that appear in directories have not been reconciled on this page.\nTo ask about your data, contact the shop through the details published on the homepage. The owner should confirm who answers such requests.',
+    'Этот сайт - публичная визитка MAGNIT в Дубае.\nЮридическое имя оператора, ответственное лицо, место хранения данных заявок и срок их хранения должен подтвердить владелец магазина, прежде чем это уведомление можно считать готовой политикой.\nЕсли вы пишете в магазин через WhatsApp, Telegram, почту или форму заявки, магазин может получить имя, телефон, город и текст вопроса, чтобы ответить на обращение.\nНе присылайте номера платёжных карт и документы, удостоверяющие личность, через форму на сайте.\nДля связи используются публичные контакты, указанные на визитке. Другие адреса и номера из справочников на этой странице не сверялись.\nВопросы о своих данных направляйте по контактам на главной странице. Владелец должен подтвердить, кто отвечает на такие обращения.',
+    'هذا الموقع بطاقة زيارة علنية لمتجر MAGNIT في دبي.\nيجب أن يؤكد مالك المتجر الاسم القانوني للمشغّل والمسؤول عن البيانات ومكان حفظ بيانات الاستفسارات ومدة حفظها قبل اعتماد هذا الإشعار كسياسة نهائية.\nإذا راسلت المتجر عبر واتساب أو تليغرام أو البريد أو نموذج الطلب، قد يستلم المتجر اسمك ورقم هاتفك ومدينتك ونص سؤالك للرد على الاستفسار.\nلا ترسل أرقام بطاقات الدفع أو وثائق الهوية عبر نموذج الموقع.\nتُستخدم للتواصل بيانات الاتصال العلنية المبينة على بطاقة الزيارة. لم تُراجع في هذه الصفحة عناوين أو أرقام أخرى تظهر في الأدلة.\nللاستفسار عن بياناتك استخدم جهات الاتصال في الصفحة الرئيسية. يجب أن يؤكد المالك من يجيب على هذه الطلبات.')
+_vis('leg.terms.body',
+    'This page is a draft notice, not a commercial offer and not a finished contract.\nThe licensed legal name, trade licence number, and any official offer text must be confirmed by the shop owner.\nPrices, stock, delivery, Trade-In, repair and warranty are not published here as a public offer. A manager confirms current terms for each request.\nProduct lists on this site or in the Telegram channel are snapshots and may change.\nIf you send a request, the shop may reply through Telegram, WhatsApp, phone or email using the contacts shown on the visiting card.\nGoverning law and the official dispute venue must be confirmed by the owner.',
+    'Эта страница - черновик уведомления, не коммерческая оферта и не готовый договор.\nЛицензионное юридическое имя, номер торговой лицензии и текст официальной оферты должен подтвердить владелец магазина.\nЦены, наличие, доставка, Trade-In, ремонт и гарантия здесь не публикуются как публичная оферта. Актуальные условия по каждому запросу подтверждает менеджер.\nСписки товаров на сайте или в Telegram-канале - это снимки и могут измениться.\nЕсли вы отправите заявку, магазин может ответить через Telegram, WhatsApp, телефон или почту по контактам на визитке.\nПрименимое право и место рассмотрения споров должен подтвердить владелец.',
+    'هذه الصفحة مسودة إشعار، وليست عرضا تجاريا ولا عقدا مكتملا.\nيجب أن يؤكد مالك المتجر الاسم القانوني المرخّص ورقم الرخصة التجارية ونص أي عرض رسمي.\nلا تُنشر هنا الأسعار أو التوفر أو التوصيل أو Trade-In أو الإصلاح أو الضمان كعرض عام. يؤكد المدير الشروط الحالية لكل طلب.\nقوائم المنتجات في الموقع أو في قناة تليغرام لقطات وقد تتغير.\nإذا أرسلت طلبا، قد يرد المتجر عبر تليغرام أو واتساب أو الهاتف أو البريد وفق بيانات بطاقة الزيارة.\nيجب أن يؤكد المالك القانون الواجب التطبيق وجهة النظر في النزاعات.')
+_vis('leg.home', 'Back to the homepage', 'На главную', 'العودة إلى الصفحة الرئيسية')
+_vis('leg.confirm', 'The shop owner must confirm this field before the page is treated as final.',
+    'Это поле должен подтвердить владелец магазина, прежде чем страница будет считаться окончательной.',
+    'يجب أن يؤكد مالك المتجر هذا الحقل قبل اعتماد الصفحة بصيغتها النهائية.')
+
+
+_vis("s.delivery.h",
+     "Delivery",
+     "Доставка",
+     "التوصيل")
+_vis("r.6.h",
+     "Delivery",
+     "Доставка",
+     "التوصيل")
+_vis("r.6.t",
+     "Ask a manager about delivery in Dubai or to another city.",
+     "Доставку по Дубаю или в другой город уточняйте у менеджера.",
+     "استفسر من المدير عن التوصيل في دبي أو إلى مدينة أخرى.")
+_vis("trust.m3",
+     "Ask a manager about delivery terms.",
+     "Условия доставки уточняйте у менеджера.",
+     "استفسر من المدير عن شروط التوصيل.")
+
+# Check only the visibility override strings for forbidden punctuation.
+for k in list(T):
+    if not k.startswith(('hero.h1','meta.desc','chip.','pil.service','srv.lead','s.tradein','s.repair','s.warranty','s.delivery','leg.')):
+        continue
+    for l, s in T[k].items():
+        assert '\u2014' not in s and '\u2013' not in s, (k, l)
+        assert '*' not in s and '#' not in s and '[' not in s and ']' not in s, (k, l, s)

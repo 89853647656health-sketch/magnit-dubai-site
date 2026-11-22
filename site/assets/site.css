@@ -346,3 +346,7 @@ bdi{unicode-bidi:isolate}
   .quick-bar{padding:6px 10px}
   .top-in{height:62px}
 }
+
+.foot-legal{margin:12px 0 0;font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.foot-legal a{color:var(--mut);text-decoration:underline;text-underline-offset:2px}
+.hero-info{padding:8px 0 28px;text-align:center}
