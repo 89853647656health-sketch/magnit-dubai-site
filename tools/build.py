@@ -34,12 +34,15 @@ MAP = 'https://www.google.com/maps/search/?api=1&query=' + urllib.parse.quote_pl
 MAP_DIR = 'https://www.google.com/maps/dir/?api=1&destination=' + urllib.parse.quote_plus(MAP_QUERY)
 # t.me/magnitae - публичный канал Magnit.ae (проверка 18.11.2026: страница канала, 6423 subscribers).
 # Личной ссылки Telegram Арсен ещё не дал: кнопка «Telegram» временно тоже ведёт на канал. См. PREP_NOTES.
+# Telegram-магазин (бот / мини-приложение), ссылка от Арсена 23.11.2026.
 TG_CH = 'https://t.me/magnitae'
 TG_CHAT = ''
 TG_DM = 'https://t.me/magnitae'
+TG_SHOP = 'https://t.me/magnit_shop_dubai_bot'
 TG_CH_HANDLE = '@magnitae'
 TG_CHAT_HANDLE = ''
 TG_DM_HANDLE = '@magnitae'
+TG_SHOP_HANDLE = '@magnit_shop_dubai_bot'
 IG = 'https://www.instagram.com/magnit.dubai'
 FB = ''
 TT = 'https://www.tiktok.com/@magnit.dubai'
@@ -54,7 +57,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261122a'
+CSS_V = '20261123a'
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
@@ -249,6 +252,9 @@ def build(lang):
         hero_cta += btn('tel:' + num, 'phone', tel_l, 'btn')
         hero_cta += btn(wa_link(num, L.get('wa.hello','')), 'wa', wa_l, 'btn primary')
 
+    shop_btn = btn(TG_SHOP, 'tg', s('cta.shop'), 'btn primary shop-tg')
+    shop_bar = f'<div class="shop-bar"><div class="wrap shop-bar-in">{shop_btn}</div></div>' if shop_btn else ''
+
     def crow(href, icon, label, handle):
         return f'<li><a class="crow" href="{e(href)}"{ext(href)}><span class="crow-ic">{ic(icon)}</span><span class="crow-t"><b>{label}</b><bdi dir="ltr">{e(handle)}</bdi></span>{ic("arrow", "crow-go")}</a></li>'
     lb_order = ' '.join(b for b in ORDER if b not in HIDDEN_B)
@@ -364,6 +370,7 @@ def build(lang):
 <button type="button" class="tbtn" id="theme-btn" aria-label="{s("ui.theme")}" title="{s("ui.theme")}">{ic("sun", "i-sun")}{ic("moon", "i-moon")}</button>
 <button type="button" class="tbtn burger" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="{s("ui.menu")}">{ic("menu")}</button>
 </div></div></header>
+{shop_bar}
 <div class="quick-bar" aria-label="{s("ct.social")}">{quick_s}</div>
 <main id="main">
 <section class="hero" id="top"><div class="hero-bg" aria-hidden="true"></div><div class="wrap hero-in">
@@ -438,6 +445,7 @@ def build(lang):
 </div>
 </dialog>
 <footer class="foot"><div class="wrap foot-in">
+<div class="foot-shop">{shop_btn}</div>
 <div class="foot-b" dir="ltr"><img src="/logo/logo-round-96.png" width="56" height="56" alt="" loading="lazy"><div><b>{e(SHOP_BRAND)}</b><small>{e(SHOP_LEGAL_SUFFIX)}</small></div></div>
 <div class="foot-t"><p class="slogan-en" lang="en" dir="ltr">{e(SLOGAN_EN)}</p>{"" if lang == "en" else "<p>" + s("f.tag") + "</p>"}<p>{s("f.more")}</p><p>{s("f.world")}</p><p>{s("f.partner")}</p></div>
 {foot_s}
