@@ -1,5 +1,5 @@
 """Сборка сайта-визитки MAGNIT (Deira, Dubai): страницы en и ru, QR, заставка.
-Языки сайта, утверждённые Арсеном: en, ru, ar.
+Языки сайта, утверждённые Арсеном: en, ru, ar, tg (таджикский, T0024 25.11.2026).
 На живой сайт выкладывать только после его "да". Своих скидок и слов "официальный дилер" не добавлять.
 """
 import os, sys, re, html, json, urllib.parse
@@ -57,11 +57,11 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261123a'
+CSS_V = '20261125tg'
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
-LANGS = [('en', 'English', 'EN', 'ltr'), ('ru', 'Русский', 'RU', 'ltr'), ('ar', 'العربية', 'AR', 'rtl')]
+LANGS = [('en', 'English', 'EN', 'ltr'), ('ru', 'Русский', 'RU', 'ltr'), ('ar', 'العربية', 'AR', 'rtl'), ('tg', 'Тоҷикӣ', 'TG', 'ltr')]
 # Чтобы добавить третий язык: дописать кортеж сюда, ключи в tools/texts.py и при необходимости RTL.
 # Категории по концепции и по присланным витринам (8 уникальных; дубль Tablets & iPad не ставить).
 # Баннеры подключаются, если файлы есть в site/img/b/{n}-560.jpg (9:16, без обрезки).
