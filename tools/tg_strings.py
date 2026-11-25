@@ -260,7 +260,7 @@ TG = {
  "promo.1.t": "iPhone 18\niPhone Duo\nShop No. 3, Al Sabkha Building\nNasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: @magnitae",
  "promo.2.t": "Электроника\nЛавозимот\nДастгоҳҳои интеллектуалӣ\nЛавозимот ба таври чакана бо нархи яклухт\nНархҳои ҷорӣ ва пешниҳодҳои махсусро аз менеҷерони мо пурсед\nMagic Mouse\nQWATCH\nMini Power Bank\nHUAWEI Band\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae",
  "promo.3.t": "Нархҳои беназирро аз менеҷерон фаҳмед\nЧакана бо нархҳои яклухт\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae",
- "promo.4.t": "Чакана бо нархҳои яклухт. Ҳамеша бо шумо\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nНархи махсуси беназирро аз менеҷерони мо фаҳмед\n+971 55 868 8151\n+971 58 824 2913",
+ "promo.4.t": "Чакана бо нархҳои яклухт. Ҳамеша бо шумо\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nНархи махсуси беназирро аз менеҷерони мо фаҳмед\n+971 58 824 2913",
  "b.01": "POCO & Galaxy",
  "leg.terms.h1": "Шартҳои истифода",
  "leg.updated": "Саҳифа 22 ноябри соли 2026 ҳамчун лоиҳаи огоҳинома омода шудааст. Майдонҳое, ки соҳиби мағоза бояд тасдиқ кунад, дар матн қайд шудаанд. Ин машварати ҳуқуқӣ нест.",
