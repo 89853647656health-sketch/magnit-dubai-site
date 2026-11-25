@@ -269,6 +269,7 @@ def build(lang):
     foot_items = []
     # WhatsApp по каждому номеру добавляется вместе с tel ниже
     if has(TG_CH): foot_items.append((TG_CH, "ch", s("l.channel")))
+    if has(TG_SHOP): foot_items.append((TG_SHOP, "tg", s("cta.shop")))
     if has(TG_CHAT): foot_items.append((TG_CHAT, "chat", s("l.chat")))
     if has(TG_DM): foot_items.append((TG_DM, "tg", "Telegram " + TG_DM_HANDLE))
     if has(IG): foot_items.append((IG, "ig", "Instagram"))
@@ -302,6 +303,7 @@ def build(lang):
         for i,(num,txt) in enumerate(PHONES))
     tg_crows = ''
     if has(TG_CH): tg_crows += crow(TG_CH, "ch", s("l.channel"), TG_CH_HANDLE)
+    if has(TG_SHOP): tg_crows += crow(TG_SHOP, "tg", s("cta.shop"), TG_SHOP_HANDLE)
     if has(TG_CHAT): tg_crows += crow(TG_CHAT, "chat", s("l.chat"), TG_CHAT_HANDLE)
     if has(TG_DM): tg_crows += crow(TG_DM, "tg", s("l.direct"), TG_DM_HANDLE)
     social_crows = ''
