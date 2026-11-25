@@ -58,6 +58,9 @@ STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
 CSS_V = '20261125tg'
+# Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop.
+# Пусто = выключено: скрипт не подключается, страницы не меняются. Включать только после «да» Арсена.
+VOICE_CALL_API = os.environ.get('MAGNIT_VOICE_CALL_API', '').strip()
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
@@ -296,6 +299,7 @@ def build(lang):
             )
             break
     hero_mark = live_logo or f'<img class="hero-logo" src="/logo/logo-full.jpg" width="368" height="368" alt="{e(SHOP_BRAND)}">'
+    voice_html = f'<script src="/assets/voice-call.js?v={CSS_V}" data-api="{e(VOICE_CALL_API)}" defer></script>' if VOICE_CALL_API else ''
     fab_html = f'<a class="fab" href="{e(WA)}" target="_blank" rel="noopener" aria-label="WhatsApp">{ic("wa")}</a>' if has(WA) else ''
     phone_rows = ''.join(f'<p class="big"><a href="tel:{num}"><bdi dir="ltr">{txt}</bdi></a></p>' for num, txt in PHONES)
     call_btns = ''.join(
@@ -459,6 +463,7 @@ def build(lang):
 <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="{s("ui.next")}">{ic("next")}</button>
 </div>
 <script src="/assets/app.js?v={CSS_V}"></script>
+{voice_html}
 </body>
 </html>
 '''

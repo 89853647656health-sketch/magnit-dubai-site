@@ -1,0 +1,19 @@
+/* Звонок с Gemini: одна круглая кнопка над WhatsApp и нижний лист звонка. Стили отдельным файлом (CSP style-src 'self'). */
+.vc-fab{position:fixed;inset-inline-end:18px;bottom:86px;z-index:40;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;border:0;background:#0164ec;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35);cursor:pointer}
+.vc-fab.on{background:#f85d01}
+.vc-sheet{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,7,12,.6)}
+.vc-sheet[hidden]{display:none}
+.vc-card{position:relative;box-sizing:border-box;width:100%;max-width:480px;max-height:85vh;overflow:auto;padding:20px 16px calc(16px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;background:#101722;color:#eef2f7;text-align:center}
+.vc-card h2{margin:0 0 12px;font-size:18px}
+.vc-close{position:absolute;top:8px;inset-inline-end:10px;border:0;background:transparent;color:inherit;font-size:26px;line-height:1;cursor:pointer}
+.vc-orb{width:72px;height:72px;margin:8px auto;border-radius:50%;background:#0164ec;opacity:.6}
+.vc-orb.listening{opacity:1;animation:vc-pulse 1.6s ease-in-out infinite}
+.vc-orb.speaking{opacity:1;background:#f85d01;animation:vc-pulse .6s ease-in-out infinite}
+@keyframes vc-pulse{50%{transform:scale(1.12)}}
+.vc-status{margin:6px 0;font-weight:700}
+.vc-left,.vc-hint{margin:4px 0;font-size:13px;opacity:.75}
+.vc-log{max-height:30vh;overflow:auto;margin:8px 0;text-align:start;font-size:14px;line-height:1.45}
+.vc-log p{margin:4px 0}
+.vc-action{width:100%;margin-top:8px}
+@media (prefers-reduced-motion:reduce){.vc-orb.listening,.vc-orb.speaking{animation:none}}
+@media print{.vc-fab,.vc-sheet{display:none}}

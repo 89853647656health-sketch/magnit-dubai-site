@@ -26,3 +26,14 @@
 5. QR-листы для печати: `python3 tools/make_qr_sheets.py` (файлы в `qr-print/`).
 
 Оригиналы материалов Арсена хранятся в `/home/box/shared/backup/magnit-media/` без правок. Для сайта допустимы сжатые копии WebP без обрезки.
+
+## Голосовой звонок с Gemini (ветка feat/gemini-voice-call, выключено)
+
+Кнопка с микрофоном над WhatsApp: посетитель говорит голосом с ассистентом магазина (Gemini Live). Ключ только на сервере magnit-shop, браузер получает одноразовый токен.
+
+- `site/assets/voice-call.js`: собранная копия из репо arsenal-tg-shop-magnit (`apps/miniapp/src/voice/siteWidget.ts`, команда `npm run voice:site -w @arsenal/miniapp`). Руками не править.
+- `site/assets/voice-call.css`: стили кнопки и окна.
+- Выключено по умолчанию: `tools/build.py` подключает скрипт, только если задан `MAGNIT_VOICE_CALL_API` (адрес magnit-shop). Без него страницы не меняются.
+- `render.yaml`: CSP `connect-src` дополнен адресом magnit-shop и `wss://generativelanguage.googleapis.com`, `Permissions-Policy` разрешает микрофон своему сайту.
+
+Включение только после «да» Арсена: на magnit-shop `VOICE_CALL_ENABLED=true` и `VOICE_CALL_ALLOW_WEB=true`, затем `MAGNIT_VOICE_CALL_API=https://magnit-shop-dcoe.onrender.com python3 tools/build.py`, коммит страниц, merge.
