@@ -268,10 +268,10 @@ def build(lang):
     # ссылки в подвале и на контактах: только подтверждённые
     foot_items = []
     # WhatsApp по каждому номеру добавляется вместе с tel ниже
+    # Большая кнопка магазина уже в шапке, в ряду иконок её не дублируем.
+    # TG_DM сейчас указывает на тот же t.me/magnitae, что и канал.
     if has(TG_CH): foot_items.append((TG_CH, "ch", s("l.channel")))
-    if has(TG_SHOP): foot_items.append((TG_SHOP, "tg", s("cta.shop")))
     if has(TG_CHAT): foot_items.append((TG_CHAT, "chat", s("l.chat")))
-    if has(TG_DM): foot_items.append((TG_DM, "tg", "Telegram " + TG_DM_HANDLE))
     if has(IG): foot_items.append((IG, "ig", "Instagram"))
     if has(FB): foot_items.append((FB, "fb", "Facebook"))
     if has(TT): foot_items.append((TT, "tt", "TikTok"))
@@ -305,7 +305,6 @@ def build(lang):
     if has(TG_CH): tg_crows += crow(TG_CH, "ch", s("l.channel"), TG_CH_HANDLE)
     if has(TG_SHOP): tg_crows += crow(TG_SHOP, "tg", s("cta.shop"), TG_SHOP_HANDLE)
     if has(TG_CHAT): tg_crows += crow(TG_CHAT, "chat", s("l.chat"), TG_CHAT_HANDLE)
-    if has(TG_DM): tg_crows += crow(TG_DM, "tg", s("l.direct"), TG_DM_HANDLE)
     social_crows = ''
     if has(IG): social_crows += crow(IG, "ig", "Instagram", IG_HANDLE)
     if has(FB): social_crows += crow(FB, "fb", "Facebook", FB_HANDLE)
@@ -447,7 +446,6 @@ def build(lang):
 </div>
 </dialog>
 <footer class="foot"><div class="wrap foot-in">
-<div class="foot-shop">{shop_btn}</div>
 <div class="foot-b" dir="ltr"><img src="/logo/logo-round-96.png" width="56" height="56" alt="" loading="lazy"><div><b>{e(SHOP_BRAND)}</b><small>{e(SHOP_LEGAL_SUFFIX)}</small></div></div>
 <div class="foot-t"><p class="slogan-en" lang="en" dir="ltr">{e(SLOGAN_EN)}</p>{"" if lang == "en" else "<p>" + s("f.tag") + "</p>"}<p>{s("f.more")}</p><p>{s("f.world")}</p><p>{s("f.partner")}</p></div>
 {foot_s}
