@@ -2,7 +2,7 @@
 
 Статический сайт-визитка на схеме GRAND PHONES. Языки, утверждённые Арсеном: английский (по умолчанию), русский и арабский (`/ar/`, направление RTL).
 
-Живой адрес: [https://magnit-dubai.onrender.com](https://magnit-dubai.onrender.com) (русский: `/ru/`, арабский: `/ar/`, таджикский: `/tg/`). Публикуется папка `site/` как Render Static Site (`render.yaml`, имя сервиса `magnit-dubai`).
+Живой адрес: [https://magnitdubai.ae](https://magnitdubai.ae) (русский: `/ru/`, арабский: `/ar/`, таджикский: `/tg/`). Публикуется папка `site/` как Render Static Site (`render.yaml`, имя сервиса `magnit-dubai`).
 
 Тексты взяты из концепции MAGNIT почти дословно. Не добавлять скидки, цены и формулировку «официальный дилер». Секция специального предложения (`#offer`) выключена (`OFFER_ENABLED = False`), пока не будет реального предложения.
 

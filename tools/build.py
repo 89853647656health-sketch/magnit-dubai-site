@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); SITE = os.pa
 
 # Контакты: пакет магазина (адрес и два мобильных) + соцсети и почта, подтверждённые Арсеном.
 # Городской +971 4 333 8033 зачёркнут на пакете - нигде не использовать. +971 55 968 8151 не ставить.
-URL = 'https://magnit-dubai.onrender.com/'
+URL = 'https://magnitdubai.ae/'
 SHOP_LEGAL_NAME = 'MAGNIT'
 SHOP_BRAND = 'MAGNIT'
 SHOP_LEGAL_SUFFIX = ''

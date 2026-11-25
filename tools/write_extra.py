@@ -33,7 +33,7 @@ def write_extra(SITE, URL, LANGS, T, CSS_V):
         "An electronics shop in Deira, Dubai. The public Telegram channel is https://t.me/magnitae. Prices and stock must be confirmed with a manager.\n\n"
         "## Contacts on the visiting card\n"
         "The address and phone numbers published on the homepage are the current visiting-card details. Other addresses or numbers that appear in directories have not been reconciled on this file.\n\n"
-        "Website: https://magnit-dubai.onrender.com/\n"
+        "Website: https://magnitdubai.ae/\n"
         "Email: Magnit.dxb@gmail.com\n"
         "Telegram channel: https://t.me/magnitae\n\n"
         "## Do not treat as a public offer\n"

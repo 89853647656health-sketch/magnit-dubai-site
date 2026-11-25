@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'qr-print')
 LOGO = os.path.join(ROOT, 'site', 'logo', 'logo-full.jpg')
-BASE = 'https://magnit-dubai.onrender.com/'
+BASE = 'https://magnitdubai.ae/'
 SHEETS = [
     ('magnit-qr', BASE),
     ('magnit-qr-ru', BASE + 'ru/'),
