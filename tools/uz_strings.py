@@ -242,7 +242,7 @@ UZ = {
  "promo.3.vid": "Noyob narxlarni menejerlardan biling",
  "promo.3.t": "Noyob narxlarni menejerlardan biling\nUlgurji narxlarda chakana savdo\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae",
  "promo.4.vid": "iPhone 18 Pro Max, maxsus narx menejerlarda",
- "promo.4.t": "Ulgurji narxlarda chakana savdo. Doim yoningizda\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nNoyob maxsus narxni menejerlarimizdan biling\n+971 55 868 8151\n+971 58 824 2913",
+ "promo.4.t": "Ulgurji narxlarda chakana savdo. Doim yoningizda\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nNoyob maxsus narxni menejerlarimizdan biling\n+971 58 824 2913",
  "b.01": "POCO & Galaxy",
  "b.01.c": "POCO va Galaxy smartfonlari. Mavjudlik murojaat chogʻida tasdiqlanadi.",
  "b.02": "Elektronika va gadjetlar",

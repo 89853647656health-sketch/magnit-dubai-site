@@ -259,9 +259,9 @@ t('promo.3.t',
   'اعرفوا الأسعار المميزة من مديرينا\nالتجزئة بأسعار الجملة\niPad Magic Keyboard\nAPPLE WATCH | HERMES\nShop No. 3, Al Sabkha Building, Nasser Square, Deira, Dubai, UAE\n+971 58 652 2443\n+971 58 824 2913\nTelegram: magnitae')
 t('promo.4.vid', 'iPhone 18 Pro Max, special price from our managers', 'iPhone 18 Pro Max, специальная цена у менеджеров', 'iPhone 18 Pro Max، سعر خاص لدى المديرين')
 t('promo.4.t',
-  'Retail at wholesale prices. Always with you\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nFind out the unique special price from our managers\n+971 55 868 8151\n+971 58 824 2913',
-  'Розница по оптовым ценам. Всегда с вами\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nУзнайте уникальную специальную цену у наших менеджеров\n+971 55 868 8151\n+971 58 824 2913',
-  'التجزئة بأسعار الجملة. دائماً معكم\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nاعرفوا السعر الخاص المميز من مديرينا\n+971 55 868 8151\n+971 58 824 2913')
+  'Retail at wholesale prices. Always with you\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nFind out the unique special price from our managers\n+971 58 824 2913',
+  'Розница по оптовым ценам. Всегда с вами\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nУзнайте уникальную специальную цену у наших менеджеров\n+971 58 824 2913',
+  'التجزئة بأسعار الجملة. دائماً معكم\niPhone 18 Pro Max\n256 GB\n1 Sim, 1 eSIM\nNo Activation, Brand New\nBurgundy\nاعرفوا السعر الخاص المميز من مديرينا\n+971 58 824 2913')
 
 # Витрины Арсена (8 штук). vitrina-3 с словом final не используем: для планшетов берём vitrina-9.
 # Подпись витрины 1 на сайте: POCO & Galaxy (на самом баннере есть слово final, баннер не правим).
