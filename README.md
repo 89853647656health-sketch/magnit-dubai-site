@@ -27,13 +27,13 @@
 
 Оригиналы материалов Арсена хранятся в `/home/box/shared/backup/magnit-media/` без правок. Для сайта допустимы сжатые копии WebP без обрезки.
 
-## Голосовой звонок с Gemini (ветка feat/gemini-voice-call, выключено)
+## Голосовой звонок с Gemini (включено 25.11.2026)
 
 Кнопка с микрофоном над WhatsApp: посетитель говорит голосом с ассистентом магазина (Gemini Live). Ключ только на сервере magnit-shop, браузер получает одноразовый токен.
 
 - `site/assets/voice-call.js`: собранная копия из репо arsenal-tg-shop-magnit (`apps/miniapp/src/voice/siteWidget.ts`, команда `npm run voice:site -w @arsenal/miniapp`). Руками не править.
 - `site/assets/voice-call.css`: стили кнопки и окна.
-- Выключено по умолчанию: `tools/build.py` подключает скрипт, только если задан `MAGNIT_VOICE_CALL_API` (адрес magnit-shop). Без него страницы не меняются.
-- `render.yaml`: CSP `connect-src` дополнен адресом magnit-shop и `wss://generativelanguage.googleapis.com`, `Permissions-Policy` разрешает микрофон своему сайту.
+- `tools/build.py` подключает скрипт с адресом magnit-shop (`MAGNIT_VOICE_CALL_API`, по умолчанию https://magnit-shop-dcoe.onrender.com). `MAGNIT_VOICE_CALL_API=''` убирает его. Кнопка видна, только если сервер отвечает enabled.
+- `render.yaml`: CSP `connect-src` дополнен адресом magnit-shop и `wss://generativelanguage.googleapis.com`, `Permissions-Policy` разрешает микрофон своему сайту. На 25.11 живой сайт этих заголовков не отдаёт (сервис создан не из Blueprint): если их зададут в панели Render, нужны эти же значения.
 
-Включение только после «да» Арсена: на magnit-shop `VOICE_CALL_ENABLED=true` и `VOICE_CALL_ALLOW_WEB=true`, затем `MAGNIT_VOICE_CALL_API=https://magnit-shop-dcoe.onrender.com python3 tools/build.py`, коммит страниц, merge.
+Сервер: на magnit-shop `VOICE_CALL_ENABLED=true` и `VOICE_CALL_ALLOW_WEB=true`, ИИ включён в кабинете.

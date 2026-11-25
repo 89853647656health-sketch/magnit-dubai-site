@@ -58,9 +58,10 @@ STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
 CSS_V = '20261125tg'
-# Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop.
-# Пусто = выключено: скрипт не подключается, страницы не меняются. Включать только после «да» Арсена.
-VOICE_CALL_API = os.environ.get('MAGNIT_VOICE_CALL_API', '').strip()
+# Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop (не секрет).
+# Включено по «да» Арсена 25.11.2026 16:28. Кнопка появляется, только если сервер отвечает enabled.
+# MAGNIT_VOICE_CALL_API='' при сборке убирает скрипт со страниц.
+VOICE_CALL_API = os.environ.get('MAGNIT_VOICE_CALL_API', 'https://magnit-shop-dcoe.onrender.com').strip()
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
 INTRO_V = '20261118'
