@@ -12,7 +12,7 @@ NEED = [
     'https://t.me/magnitae',
     'https://www.instagram.com/magnit.dubai',
     'https://www.tiktok.com/@magnit.dubai',
-    'mailto:Magnit.dxb@gmail.com',
+    'mailto:info@magnitdubai.ae',
 ]
 NEED_PREFIX = [
     'https://wa.me/971586522443',
