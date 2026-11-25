@@ -1,4 +1,4 @@
-"""Проверка MAGNIT: en/ru/ar/tg x 2 темы x 344/884/1440, ошибки консоли, переполнение, ссылки, заставка, форма."""
+"""Проверка MAGNIT: en/ru/ar/uz/tg x 2 темы x 344/884/1440, ошибки консоли, переполнение, ссылки, заставка, форма."""
 import asyncio, json, os, re, urllib.parse
 import cv2, numpy as np
 from playwright.async_api import async_playwright
@@ -21,7 +21,7 @@ NEED_PREFIX = [
     'https://www.google.com/maps/search/?api=1&query=',
 ]
 FORBIDDEN_NUM = ['43338033', '4 333 8033', '55 968 8151', '559688151', '55 868 8151', '558688151']
-LANGS = ['en', 'ru', 'ar', 'tg']
+LANGS = ['en', 'ru', 'ar', 'uz', 'tg']
 WIDTHS = [344, 884, 1440]
 
 async def skip_intro(pg):
