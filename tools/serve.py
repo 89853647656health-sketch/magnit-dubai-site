@@ -1,5 +1,5 @@
 import http.server, functools, os, sys
-CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'"
+CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://magnit-shop-dcoe.onrender.com wss://generativelanguage.googleapis.com" + os.environ.get('MAGNIT_CSP_CONNECT_EXTRA', '') + "; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'"
 class H(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Content-Security-Policy', CSP); self.send_header('X-Content-Type-Options', 'nosniff'); super().end_headers()
