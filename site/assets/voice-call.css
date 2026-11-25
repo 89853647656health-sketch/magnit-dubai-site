@@ -18,3 +18,9 @@
 .vc-action{width:100%;margin-top:8px}
 @media (prefers-reduced-motion:reduce){.vc-orb.listening,.vc-orb.speaking{animation:none}}
 @media print{.vc-fab,.vc-sheet{display:none}}
+
+body:has(#talk-to-agent) .vc-fab{display:none}
+.vc-fab-label{width:auto;height:auto;min-height:56px;padding:10px 16px;border-radius:28px;gap:8px;grid-auto-flow:column;font:700 14px/1.2 Lato,system-ui,sans-serif;white-space:nowrap}
+.vc-tg{display:inline-flex;margin-top:8px}
+.vc-tg[hidden]{display:none}
+#talk-to-agent.on{box-shadow:0 0 0 4px rgba(248,93,1,.35)}

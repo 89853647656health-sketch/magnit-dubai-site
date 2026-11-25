@@ -353,8 +353,12 @@ bdi{unicode-bidi:isolate}
 
 /* Telegram shop button: solid CTA under the header and in the footer */
 .shop-bar{position:relative;z-index:40;border-bottom:1px solid var(--line2);background:var(--head);padding:10px 0}
-.shop-bar-in{display:flex;justify-content:center}
+.shop-bar-in{display:flex;flex-direction:column;align-items:center;gap:10px}
 .shop-bar .shop-tg,.foot-shop .shop-tg{width:100%;max-width:420px}
+.agent-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;max-width:720px}
+.agent-actions .btn{flex:1 1 180px;justify-content:center}
+#talk-to-agent{background:#f85d01;color:#01102c;border-color:transparent}
+body:has(#talk-to-agent) .vc-fab{display:none}
 .foot-shop{grid-column:1/-1;display:flex;justify-content:center;margin:0 0 8px}
 @media (max-width:700px){
   .shop-bar{padding:8px 0}

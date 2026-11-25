@@ -57,10 +57,11 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261125uz'
-# Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop (не секрет).
-# Включено по «да» Арсена 25.11.2026 16:28. Кнопка появляется, только если сервер отвечает enabled.
-# MAGNIT_VOICE_CALL_API='' при сборке убирает скрипт со страниц.
+CSS_V = '20261125agent'
+# Голосовой звонок с Gemini. На странице видимая кнопка «Поговорить с агентом».
+# Если голос недоступен, кнопка открывает чат бота @Magnitae_bot.
+# Рядом кнопки «Оценить свой телефон» (?start=tradein) и «Ремонт телефона» (?start=repair).
+# MAGNIT_VOICE_CALL_API='' при сборке убирает скрипт голоса со страниц.
 VOICE_CALL_API = os.environ.get('MAGNIT_VOICE_CALL_API', 'https://magnit-shop-dcoe.onrender.com').strip()
 QR_NAME = 'shop-qr.png'
 OFFER_ENABLED = False  # одиночный блок #offer выключен: четыре ролика живут в #deals
@@ -123,6 +124,7 @@ ICONS = {
  'tag': '<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1 1 0 0 1 0 1.4l-7.3 7.3a1 1 0 0 1-1.4 0Z"/><circle cx="8" cy="8" r="1.5"/>',
  'swap': '<path d="M7 4 3.5 7.5 7 11M3.5 7.5H17a3.5 3.5 0 0 1 3.5 3.5M17 20l3.5-3.5L17 13M20.5 16.5H7A3.5 3.5 0 0 1 3.5 13"/>',
  'tool': '<path d="M14.5 6.5a4 4 0 0 0-5.4 5.1L3.8 17a1.8 1.8 0 0 0 2.5 2.5l5.4-5.4a4 4 0 0 0 5.1-5.4l-2.4 2.4-2.3-.4-.4-2.3 2.4-2.4Z"/>',
+ 'mic': '<path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 12a7 7 0 0 1-14 0M12 19v3M9 22h6"/>',
  'shield': '<path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6L12 3Z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/>',
  'truck': '<path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
  'crown': '<path d="M3.5 8l4.2 3.5L12 5l4.3 6.5L20.5 8l-1.8 10H5.3Z"/><path d="M5.5 21h13"/>',
@@ -257,7 +259,20 @@ def build(lang):
         hero_cta += btn(wa_link(num, L.get('wa.hello','')), 'wa', wa_l, 'btn primary')
 
     shop_btn = btn(TG_SHOP, 'tg', s('cta.shop'), 'btn primary shop-tg')
-    shop_bar = f'<div class="shop-bar"><div class="wrap shop-bar-in">{shop_btn}</div></div>' if shop_btn else ''
+    talk_btn = (
+        f'<a class="btn primary" id="talk-to-agent" href="{e(TG_SHOP)}"{ext(TG_SHOP)}>'
+        f'{ic("mic")}<span>{s("cta.talk")}</span></a>'
+    ) if has(TG_SHOP) else ''
+    tradein_btn = btn(TG_SHOP + '?start=tradein', 'swap', s('cta.tradein'), 'btn') if has(TG_SHOP) else ''
+    repair_btn = btn(TG_SHOP + '?start=repair', 'tool', s('cta.repair'), 'btn') if has(TG_SHOP) else ''
+    agent_actions = (
+        f'<div class="agent-actions">{talk_btn}{tradein_btn}{repair_btn}</div>'
+        if (talk_btn or tradein_btn or repair_btn) else ''
+    )
+    shop_bar = (
+        f'<div class="shop-bar"><div class="wrap shop-bar-in">{shop_btn}{agent_actions}</div></div>'
+        if (shop_btn or agent_actions) else ''
+    )
 
     def crow(href, icon, label, handle):
         return f'<li><a class="crow" href="{e(href)}"{ext(href)}><span class="crow-ic">{ic(icon)}</span><span class="crow-t"><b>{label}</b><bdi dir="ltr">{e(handle)}</bdi></span>{ic("arrow", "crow-go")}</a></li>'
