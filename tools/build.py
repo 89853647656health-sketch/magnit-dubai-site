@@ -57,7 +57,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261125uz'
+CSS_V = '20261125pg'
 # Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop (не секрет).
 # Включено по «да» Арсена 25.11.2026 16:28. Кнопка появляется, только если сервер отвечает enabled.
 # MAGNIT_VOICE_CALL_API='' при сборке убирает скрипт со страниц.
@@ -359,6 +359,7 @@ def build(lang):
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/logo/logo-round-64.png"><link rel="apple-touch-icon" href="/logo/logo-round-180.png"><link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/lato-black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
+<link rel="stylesheet" href="/assets/pager.css?v={CSS_V}">
 <script src="/assets/boot.js?v={CSS_V}"></script>
 <link rel="stylesheet" href="/assets/intro.css?v={INTRO_V}">
 <script src="/assets/intro-boot.js?v={INTRO_V}"></script>
@@ -464,6 +465,7 @@ def build(lang):
 <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="{s("ui.next")}">{ic("next")}</button>
 </div>
 <script src="/assets/app.js?v={CSS_V}"></script>
+<script src="/assets/pager.js?v={CSS_V}"></script>
 {voice_html}
 </body>
 </html>

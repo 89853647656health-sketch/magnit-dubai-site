@@ -1,0 +1,22 @@
+/* Листающий сайт (T0029). Включается только когда pager.js добавил класс pager-on. Цвета и шрифты сайта MAGNIT. */
+.pager-on,.pager-on body{overflow:hidden;height:100%}
+.pager-on{scroll-padding-top:0;scroll-behavior:auto}
+.pager-on body{overscroll-behavior:none}
+.pager{display:flex;flex-direction:row;height:calc(100dvh - var(--pager-top,120px));overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pager::-webkit-scrollbar{display:none}
+.pager>.page{flex:0 0 100%;width:100%;min-width:100%;height:100%;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-snap-align:start;scroll-snap-stop:always;padding-bottom:84px}
+.pager>.page>.foot{margin-top:32px;padding-bottom:24px}
+.pager>.hero{display:flex;flex-direction:column;justify-content:center}
+.pager-bar{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:45;display:flex;align-items:center;gap:6px;padding:6px;border-radius:999px;background:var(--head);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.25);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px)}
+.pager-arrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--acc);display:grid;place-items:center;cursor:pointer;padding:0}
+.pager-arrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+[dir=rtl] .pager-arrow svg{transform:scaleX(-1)}
+.pager-arrow:disabled{opacity:.35;cursor:default}
+.pager-arrow:not(:disabled):hover{border-color:var(--acc)}
+.pager-dots{display:flex;align-items:center;gap:6px;padding:0 4px}
+.pager-dot{width:8px;height:8px;border-radius:999px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .25s,background-color .25s}
+.pager-dot[aria-current]{width:22px;background:var(--gold)}
+.pager-arrow:focus-visible,.pager-dot:focus-visible{outline:2px solid var(--champ);outline-offset:2px}
+.pager-on .fab{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+@media (prefers-reduced-motion:reduce){.pager{scroll-behavior:auto}}
+@media print{.pager-bar{display:none}.pager-on,.pager-on body{overflow:visible;height:auto}.pager{display:block;height:auto;overflow:visible}.pager>.page{height:auto;overflow:visible}}

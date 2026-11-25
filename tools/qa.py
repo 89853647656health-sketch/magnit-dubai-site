@@ -61,11 +61,17 @@ async def main():
                     await pg.wait_for_timeout(800)
                     info = await pg.evaluate('''() => {
                       const W = document.documentElement.clientWidth, over = [];
-                      document.querySelectorAll('body *').forEach(e => {
+                      const check = (sel, inPage) => document.querySelectorAll(sel).forEach(e => {
                         if (e.closest('.rail,.lb,.sprite,.lang-menu,.nav,.skip,.vintro,.ring,.hero-media')) return;
+                        if (!inPage && e.closest('.pager > .page')) return;
                         const r = e.getBoundingClientRect();
                         if (r.width && (r.right > W + 1 || r.left < -1)) over.push(e.tagName + '.' + e.className);
                       });
+                      // Листающий сайт (T0029): каждую страницу проверяем, когда она на экране.
+                      const pages = [...document.querySelectorAll('.pager > .page')];
+                      check('body *', false);
+                      pages.forEach(p => { p.scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'instant' }); check('#' + p.id + ' *', true); });
+                      if (pages[0]) pages[0].scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'instant' });
                       const html = document.documentElement.outerHTML;
                       return {
                         sw: document.documentElement.scrollWidth, W,
