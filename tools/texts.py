@@ -416,3 +416,13 @@ for k in list(T):
     for l, s in T[k].items():
         assert '\u2014' not in s and '\u2013' not in s, (k, l)
         assert '*' not in s and '#' not in s and '[' not in s and ']' not in s, (k, l, s)
+
+# Tajik (tg, Cyrillic), T0024 25.11.2026: site languages en, ru, ar, tg.
+from tg_strings import TG
+for k, tg in TG.items():
+    assert k in T, ('missing key', k)
+    assert '\u2014' not in tg and '\u2013' not in tg, k
+    assert tg.strip(), k
+    T[k]['tg'] = tg
+missing_tg = [k for k in T if 'tg' not in T[k]]
+assert not missing_tg, missing_tg

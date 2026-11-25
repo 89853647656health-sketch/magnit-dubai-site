@@ -360,3 +360,7 @@ bdi{unicode-bidi:isolate}
   .shop-bar{padding:8px 0}
   .shop-bar .shop-tg,.foot-shop .shop-tg{max-width:none}
 }
+@font-face{font-family:"GP Noto Sans";font-style:normal;font-weight:400 900;font-display:swap;src:url(/assets/fonts/noto-sans-cyr.woff2) format("woff2")}
+[lang=tg]{--f:"GP Noto Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--fh:var(--f);font-family:var(--f)}
+[lang=tg] .brand-t,[lang=tg] .lang-menu a b,[lang=tg] .addr address,[lang=tg] .crow-t bdi,[lang=tg] .foot-b{font-family:var(--f)}
+[lang=tg] .journey li{min-width:0}[lang=tg] .journey h4,[lang=tg] .journey p{overflow-wrap:anywhere;hyphens:auto}
