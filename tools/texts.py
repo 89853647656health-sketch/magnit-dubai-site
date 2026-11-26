@@ -435,3 +435,19 @@ for k, uz in UZ.items():
     T[k]['uz'] = uz
 missing_uz = [k for k in T if 'uz' not in T[k]]
 assert not missing_uz, missing_uz
+
+# T0036, 26.11.2026: связь с магазином только внутри системы MAGNIT (звонок сотруднику и чат на сайте),
+# без WhatsApp и без набора номера. Пять языков сайта.
+def _t36(k, en, ru, ar, uz, tg):
+    T[k] = {'en': en, 'ru': ru, 'ar': ar, 'uz': uz, 'tg': tg}
+    for l, s in T[k].items():
+        assert s.strip() and '—' not in s and '–' not in s and 'WhatsApp' not in s, (k, l)
+
+_t36('mg.call', 'Call a staff member', 'Позвонить сотруднику', 'اتصل بموظف', "Xodimga qo'ng'iroq", 'Занг ба корманд')
+_t36('mg.chat', 'Write in the chat', 'Написать в чат', 'اكتب في الدردشة', 'Chatga yozish', 'Дар чат навиштан')
+_t36('mg.call.service', 'Call the repair team', 'Позвонить в ремонт', 'اتصل بقسم الإصلاح', "Ta'mir bo'limiga qo'ng'iroq", 'Занг ба шуъбаи таъмир')
+_t36('mg.call.buyback', 'Call about valuation and trade-in', 'Позвонить по оценке и обмену', 'اتصل بشأن التقييم والاستبدال', "Baholash va almashtirish bo'yicha qo'ng'iroq", 'Занг барои арзёбӣ ва иваз')
+_t36('cb.ok', 'Thank you! Your request is with MAGNIT staff. The reply will come to the chat on this site.', 'Спасибо! Заявка у сотрудника MAGNIT. Ответ придёт в чат на этом сайте.', 'شكراً! طلبك لدى موظف MAGNIT. سيصلك الرد في الدردشة على هذا الموقع.', "Rahmat! So'rovingiz MAGNIT xodimida. Javob shu saytdagi chatga keladi.", 'Ташаккур! Дархости шумо назди корманди MAGNIT аст. Ҷавоб ба чати ҳамин сайт меояд.')
+_t36('cb.rate', 'Thank you! Your request is with MAGNIT staff.', 'Спасибо! Заявка у сотрудника MAGNIT.', 'شكراً! طلبك لدى موظف MAGNIT.', "Rahmat! So'rovingiz MAGNIT xodimida.", 'Ташаккур! Дархости шумо назди корманди MAGNIT аст.')
+_t36('cb.fail', 'Could not send. Write in the chat on this site.', 'Не удалось отправить. Напишите в чат на сайте.', 'تعذّر الإرسال. اكتب في الدردشة على الموقع.', "Yuborib bo'lmadi. Saytdagi chatga yozing.", 'Фиристода нашуд. Дар чати сайт нависед.')
+_t36('cb.p2', 'The request goes to MAGNIT staff. The reply will come to the chat on this site.', 'Заявка уйдёт сотруднику MAGNIT. Ответ придёт в чат на этом сайте.', 'سيصل الطلب إلى موظف MAGNIT. سيصلك الرد في الدردشة على هذا الموقع.', "So'rov MAGNIT xodimiga boradi. Javob shu saytdagi chatga keladi.", 'Дархост ба корманди MAGNIT меравад. Ҷавоб ба чати ҳамин сайт меояд.')

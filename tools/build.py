@@ -57,7 +57,7 @@ ADDRESS_COUNTRY = 'United Arab Emirates'
 STREET_ADDRESS = 'Shop No. 3, Al Sabkha Building, Nasser Square'
 ADDRESS_LOCALITY = 'Deira, Dubai'
 SLOGAN_EN = 'SMART TECHNOLOGY. BETTER VALUE. PERSONAL SERVICE.'
-CSS_V = '20261125pg'
+CSS_V = '20261126t36'
 # Голосовой звонок с Gemini (кнопка с микрофоном над WhatsApp). Адрес API сервиса magnit-shop (не секрет).
 # Включено по «да» Арсена 25.11.2026 16:28. Кнопка появляется, только если сервер отвечает enabled.
 # MAGNIT_VOICE_CALL_API='' при сборке убирает скрипт со страниц.
@@ -200,6 +200,10 @@ def build(lang):
         if not href or (not has(href) and not str(href).startswith(('#', '/', 'tel:', 'mailto:'))):
             return ''
         return f'<a class="{cls}" href="{e(href)}"{ext(href)}>{ic(icon)}<span>{label}</span></a>'
+    # T0036: кнопка связи внутри системы MAGNIT (звонок сотруднику или чат), открывает /assets/magnit-connect.js.
+    def mg(action, icon, label, cls='btn', reason=''):
+        r = f' data-mg-reason="{e(reason)}"' if reason else ''
+        return f'<button type="button" class="{cls}" data-mg="{action}"{r}>{ic(icon)}<span>{label}</span></button>'
     langs_menu = ''.join(f'<li><a href="{"/" if c == "en" else "/" + c + "/"}" hreflang="{c}" lang="{c}" data-lang="{c}"{" aria-current=" + chr(34) + "true" + chr(34) if c == lang else ""}><b>{sh}</b><span>{nm}</span></a></li>' for c, nm, sh, _ in LANGS)
     alt_links = ''.join(f'<link rel="alternate" hreflang="{c}" href="{URL}{"" if c == "en" else c + "/"}">' for c, *_ in LANGS) + f'<link rel="alternate" hreflang="x-default" href="{URL}">'
     nav = ''.join(
@@ -217,11 +221,16 @@ def build(lang):
             f'{banner(n, eager=(i < 2))}'
             f'<h3>{title}</h3>'
             f'<p>{cap}</p>'
-            f'<a class="btn ghost sm" href="{e(wa(L["wa.ask"] + L["b." + n]))}" target="_blank" rel="noopener">{ic("wa")}<span>{s("prod.ask")}</span></a>'
+            f'{mg("chat", "chat", s("prod.ask"), "btn ghost sm")}'
             f'</article>'
         )
     groups += '</div>' 
-    services = ''.join(f'<article class="srv"><span class="srv-ic">{ic(icn)}</span><h3>{s(f"s.{k}.h")}</h3><p>{s(f"s.{k}.s")}</p>{more(f"s.{k}.m")}</article>' for k, icn in SERV)
+    # T0036: у каждой услуги звонок в свой отдел (кабинет): ремонт и гарантия, оценка и обмен, продажи.
+    SRV_CALL = {'tradein': ('call:buyback', 'mg.call.buyback'), 'repair': ('call:service', 'mg.call.service'), 'warranty': ('call:service', 'mg.call.service')}
+    def srv_call(k):
+        act, lbl = SRV_CALL.get(k, ('call:sales', 'mg.call'))
+        return mg(act, 'phone', s(lbl), 'btn ghost sm srv-call')
+    services = ''.join(f'<article class="srv"><span class="srv-ic">{ic(icn)}</span><h3>{s(f"s.{k}.h")}</h3><p>{s(f"s.{k}.s")}</p>{more(f"s.{k}.m")}{srv_call(k)}</article>' for k, icn in SERV)
     journey = ''.join(f'<li><b>{num(i)}</b><h4>{s(f"j.{i}.h")}</h4><p>{s(f"j.{i}.t")}</p></li>' for i in range(1, 6))
     n_why = max(i for i in range(1, 16) if f'r.{i}.h' in L)
     reasons = ''.join(f'<li class="rs"><span class="rs-n">{num(i)}</span><h3>{s(f"r.{i}.h")}</h3><p>{s(f"r.{i}.t")}</p></li>' for i in range(1, n_why + 1))
@@ -250,11 +259,7 @@ def build(lang):
     if has(TG_DM): act_items.append(btn(TG_DM, 'tg', s('a.tg'), 'pill'))
     acts = ''.join(act_items)
     hero_cta = ''
-    for num, txt in PHONES:
-        tel_l = f'<bdi dir="ltr">{e(txt)}</bdi>'
-        wa_l = 'WhatsApp ' + f'<bdi dir="ltr">{e(txt)}</bdi>'
-        hero_cta += btn('tel:' + num, 'phone', tel_l, 'btn')
-        hero_cta += btn(wa_link(num, L.get('wa.hello','')), 'wa', wa_l, 'btn primary')
+    hero_cta = mg('call', 'phone', s('mg.call'), 'btn primary') + mg('chat', 'chat', s('mg.chat'), 'btn')
 
     shop_btn = btn(TG_SHOP, 'tg', s('cta.shop'), 'btn primary shop-tg')
     shop_bar = f'<div class="shop-bar"><div class="wrap shop-bar-in">{shop_btn}</div></div>' if shop_btn else ''
@@ -279,16 +284,15 @@ def build(lang):
     if has(IG): foot_items.append((IG, "ig", "Instagram"))
     if has(FB): foot_items.append((FB, "fb", "Facebook"))
     if has(TT): foot_items.append((TT, "tt", "TikTok"))
-    for num, txt in PHONES:
-        foot_items.append(("tel:" + num, "phone", txt))
-        foot_items.append((wa_link(num, L.get("wa.hello","")), "wa", "WhatsApp " + txt))
     if has(EMAIL):
         foot_items.append(("mailto:" + EMAIL, "mail", EMAIL))
     foot_items.append((MAP, "pin", s("ct.map")))
     foot_s = '<div class="foot-s">' + ''.join(
         f'<a href="{e(h)}"{ext(h)} aria-label="{n}">{ic(i)}</a>' for h, i, n in foot_items) + '</div>'
     quick_s = ''.join(
-        f'<a href="{e(h)}"{ext(h)} aria-label="{n}">{ic(i)}</a>' for h, i, n in foot_items)
+        f'<a href="{e(h)}"{ext(h)} aria-label="{n}">{ic(i)}</a>' for h, i, n in foot_items) + (
+        f'<button type="button" data-mg="chat" aria-label="{s("mg.chat")}">{ic("chat")}</button>'
+        f'<button type="button" data-mg="call" aria-label="{s("mg.call")}">{ic("phone")}</button>')
     live_logo = ''
     for live_name in ('logo-live.mp4', 'logo-live.webm'):
         if os.path.isfile(os.path.join(SITE, 'logo', live_name)):
@@ -300,12 +304,11 @@ def build(lang):
             )
             break
     hero_mark = live_logo or f'<img class="hero-logo" src="/logo/logo-full.jpg" width="368" height="368" alt="{e(SHOP_BRAND)}">'
-    voice_html = f'<script src="/assets/voice-call.js?v={CSS_V}" data-api="{e(VOICE_CALL_API)}" defer></script>' if VOICE_CALL_API else ''
-    fab_html = f'<a class="fab" href="{e(WA)}" target="_blank" rel="noopener" aria-label="WhatsApp">{ic("wa")}</a>' if has(WA) else ''
-    phone_rows = ''.join(f'<p class="big"><a href="tel:{num}"><bdi dir="ltr">{txt}</bdi></a></p>' for num, txt in PHONES)
-    call_btns = ''.join(
-        btn("tel:" + num, "phone", txt, "btn" + (" primary" if i==0 else "")) + btn(wa_link(num, L.get("wa.hello","")), "wa", "WhatsApp " + txt, "btn")
-        for i,(num,txt) in enumerate(PHONES))
+    # T0036: агент, звонок сотруднику и чат внутри системы (тот же код, что в мини-приложении). WhatsApp и набор номера убраны.
+    voice_html = f'<link rel="stylesheet" href="/assets/magnit-connect.css?v={CSS_V}"><script src="/assets/magnit-connect.js?v={CSS_V}" defer></script>'
+    fab_html = ''
+    phone_rows = ''.join(f'<p class="big"><bdi dir="ltr">{txt}</bdi></p>' for num, txt in PHONES)
+    call_btns = mg('call', 'phone', s('mg.call'), 'btn primary') + mg('chat', 'chat', s('mg.chat'), 'btn')
     tg_crows = ''
     if has(TG_CH): tg_crows += crow(TG_CH, "ch", s("l.channel"), TG_CH_HANDLE)
     if has(TG_SHOP): tg_crows += crow(TG_SHOP, "tg", s("cta.shop"), TG_SHOP_HANDLE)
@@ -341,7 +344,7 @@ def build(lang):
 <div class="offer-t"><p class="label">{s("off.label")}</p><h2><bdi dir="ltr">{s("off.h2")}</bdi></h2><p class="lead2">{s("off.gen")}</p>
 <ul class="ticks">{"".join(f"<li>{ic('check')}<span>{s(k)}</span></li>" for k in ("off.p1", "off.p2"))}</ul>
 <p class="note">{s("off.note")}</p>
-<div class="stack">{btn(wa(L["wa.i18"]), "wa", s("cta.price"), "btn primary")}</div></div>
+<div class="stack">{mg("chat", "tag", s("cta.price"), "btn primary")}</div></div>
 </div></section>
 '''
     page = f'''<!DOCTYPE html>
@@ -390,7 +393,7 @@ def build(lang):
 <div class="deals-in">
 <div class="deals-t"><p>{s("deals.p")}</p><p class="lh">{s("deals.lh")}</p><ul class="ticks">{deals_list}</ul></div>
 <div class="deals-c"><img src="/logo/logo-640.webp" width="320" height="320" alt="" loading="lazy" class="deals-logo"><p class="slogan">{s("deals.slogan")}</p>
-<div class="stack deals-btns">{(btn(TG_CH, "ch", s("cta.channel"), "btn primary") if has(TG_CH) else "")}{(btn(TG_DM, "tg", s("cta.tg"), "btn") if has(TG_DM) else "")}{(btn(wa_link(PHONE, L.get("wa.hello","")), "wa", s("cta.wa"), "btn") if has(WA) else "")}</div><p class="note">{s("deals.note")}</p></div>
+<div class="stack deals-btns">{(btn(TG_CH, "ch", s("cta.channel"), "btn primary") if has(TG_CH) else "")}{(btn(TG_DM, "tg", s("cta.tg"), "btn") if has(TG_DM) else "")}{mg("chat", "chat", s("mg.chat"), "btn")}</div><p class="note">{s("deals.note")}</p></div>
 </div>
 </div></section>
 <section class="sec alt" id="products"><div class="wrap">
@@ -417,7 +420,7 @@ def build(lang):
 {offer_html}
 <section class="sec alt" id="consult"><div class="wrap"><div class="consult">
 <div class="consult-t"><p class="label">{s("cons.label")}</p><h2>{s("cons.h2")}</h2><p class="lead2">{s("cons.s")}</p><p>{s("cons.p")}</p><ul class="qs">{qs}</ul></div>
-<form class="cb" id="callback" novalidate data-wa="{WA}" data-tpl="{e(L["wa.cb"])}" data-err="{s("cb.err")}" data-p2="{s("cb.p2")}" data-sending="{s("cb.sending")}" data-ok="{s("cb.ok")}" data-fail="{s("cb.fail")}" data-rate="{s("cb.rate")}">
+<form class="cb" id="callback" novalidate data-api="{e(VOICE_CALL_API)}" data-err="{s("cb.err")}" data-p2="{s("cb.p2")}" data-sending="{s("cb.sending")}" data-ok="{s("cb.ok")}" data-fail="{s("cb.fail")}" data-rate="{s("cb.rate")}">
 <h3>{s("cb.h")}</h3><p class="cb-p">{s("cb.p")}</p>
 <label><span>{s("cb.name")}</span><input name="name" autocomplete="name" maxlength="80" required></label>
 <label><span>{s("cb.phone")}</span><input name="phone" type="tel" dir="ltr" autocomplete="tel" inputmode="tel" maxlength="30" required></label>
@@ -425,8 +428,7 @@ def build(lang):
 <div class="cb-hp" aria-hidden="true"><label><span>{s("cb.hp")}</span><input name="website" tabindex="-1" autocomplete="off"></label></div>
 <p class="cb-err" role="alert" hidden></p>
 <p class="cb-ok" role="status" hidden></p>
-<button class="btn primary cb-send" type="submit">{ic("wa")}<span>{s("cb.h")}</span></button>
-<button class="btn cb-wa" type="button" hidden>{ic("wa")}<span>{s("cb.wa")}</span></button>
+<button class="btn primary cb-send" type="submit">{ic("phone")}<span>{s("cb.h")}</span></button>
 </form>
 </div><div class="acts">{acts}</div></div></section>
 <section class="sec" id="contacts"><div class="wrap">

@@ -6,17 +6,15 @@ BASE = os.environ.get('BASE', 'http://127.0.0.1:8822/')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'shots', 'qa') + os.sep
 os.makedirs(OUT, exist_ok=True)
+# T0036: связь внутри системы MAGNIT. Ссылок wa.me и tel: на сайте быть не должно.
+NO_LINK_PREFIX = ['https://wa.me/', 'tel:', 'https://api.whatsapp.com/']
 NEED = [
-    'tel:+971586522443',
-    'tel:+971588242913',
     'https://t.me/magnitae',
     'https://www.instagram.com/magnit.dubai',
     'https://www.tiktok.com/@magnit.dubai',
     'mailto:info@magnitdubai.ae',
 ]
 NEED_PREFIX = [
-    'https://wa.me/971586522443',
-    'https://wa.me/971588242913',
     'https://www.google.com/maps/dir/?api=1&destination=',
     'https://www.google.com/maps/search/?api=1&query=',
 ]
@@ -52,7 +50,14 @@ async def main():
                         f"localStorage.setItem('shop-theme','{theme}');localStorage.setItem('shop-lang','{lang}');"
                         "window.__opened=[];window.open=function(u){window.__opened.push(u);return null}"
                     )
-                    pg = await ctx.new_page(); errs = []; bad = []
+                    pg = await ctx.new_page(); errs = []; bad = []; sent = []
+                    # Бот магазина подменяем: проверяем, что форма и кнопки уходят в нашу систему, а не наружу.
+                    async def bot_route(route, *_a, sent=sent):
+                        rq = route.request
+                        if rq.url.endswith('/miniapp/chat/transfer'): sent.append(rq.post_data or '')
+                        body = '{"enabled":false}' if '/miniapp/voice/config' in rq.url else '{"ok":true,"messages":[]}'
+                        await route.fulfill(status=200, content_type='application/json', body=body, headers={'access-control-allow-origin': '*'})
+                    await pg.route('https://magnit-shop-dcoe.onrender.com/**', bot_route)
                     pg.on('console', lambda m: errs.append(m.text) if m.type in ('error', 'warning') else None)
                     pg.on('pageerror', lambda e: errs.append('PAGEERR ' + str(e)))
                     pg.on('response', lambda r: bad.append(r.url) if r.status >= 400 else None)
@@ -88,6 +93,9 @@ async def main():
                     }''')
                     links = info.pop('links')
                     miss = [n for n in NEED if n not in links] + [n for n in NEED_PREFIX if not any(l.startswith(n) for l in links)]
+                    miss += ['outside:' + l for l in links if l and any(l.startswith(x) for x in NO_LINK_PREFIX)]
+                    mg = await pg.evaluate('[document.querySelectorAll("[data-mg]").length, Boolean(document.querySelector(".mgw-bar"))]')
+                    if mg[0] < 5 or not mg[1]: miss.append(f'connect:{mg}')
                     # empty or REPLACE hrefs
                     empty_href = [l for l in links if l is None or l == '']
                     # callback
@@ -97,8 +105,9 @@ async def main():
                         await pg.fill('#callback input[name=phone]', '+971 50 000 0000')
                         await pg.fill('#callback textarea[name=topic]', 'iPhone')
                         await pg.click('#callback button[type=submit]')
+                        await pg.wait_for_timeout(600)
                         opened = await pg.evaluate('window.__opened')
-                        cb = bool(opened) and opened[0].startswith('https://wa.me/971586522443') and 'Test' in urllib.parse.unquote(opened[0])
+                        cb = (not opened) and bool(sent) and '"department":"sales"' in sent[-1] and 'Test' in sent[-1] and '+971 50 000 0000' in sent[-1]
                     except Exception as ex:
                         cb = str(ex)
                     await pg.evaluate('window.scrollTo(0,0)')
