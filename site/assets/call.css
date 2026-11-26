@@ -1,5 +1,0 @@
-/* Страница звонка (T0030). */
-.callp{min-height:100dvh;display:grid;place-items:center;padding:24px;text-align:center}
-.callp-in{display:grid;gap:14px;max-width:360px;width:100%}
-.callp img{margin:0 auto;border-radius:50%}
-.callp p{margin:0;color:var(--mut)}
